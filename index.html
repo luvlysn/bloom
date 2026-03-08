@@ -248,6 +248,8 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}.pop{animation:pop .25s ease}
 @media(min-width:768px){.sidebar{display:flex;flex-direction:column}.main{margin-left:var(--sidebar-w)}.bn{display:none}.scroll{max-width:640px;padding:0 20px 40px}.hg{grid-template-columns:1fr 1fr 1fr}}
 </style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js" async defer></script>
 </head>
 <body>
 <div class="shell">
@@ -323,6 +325,10 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 </div></div>
 </div></div>
 <div class="bn"><div class="ni act" data-nav="home"><div class="ni-i">🌿</div><div class="ni-l">Home</div></div><div class="ni" data-nav="tasks"><div class="ni-i">📌</div><div class="ni-l">Tasks</div></div><div class="ni" data-nav="calendar"><div class="ni-i">📅</div><div class="ni-l">Calendar</div></div><div class="ni" data-nav="settings"><div class="ni-i">⚙️</div><div class="ni-l">Settings</div></div></div>
+<div id="gdrive-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:300;background:var(--gold-bg);border-bottom:1px solid var(--gold-dim);padding:12px 16px;text-align:center">
+<div style="font-size:0.875rem;font-weight:600;color:var(--gold);margin-bottom:6px">Connect to Google Drive to save your data</div>
+<button id="gdrive-connect-btn" style="background:var(--gold);color:#12111A;border:none;border-radius:8px;padding:8px 20px;font-size:0.875rem;font-weight:700;cursor:pointer;font-family:inherit">Connect Google Drive</button>
+</div>
 <div class="toast" id="toast-el"></div>
 <div class="modal-bg" id="modal-bg"><div class="modal"><div class="modal-title" id="modal-title">Edit</div><div id="modal-body"></div><div class="modal-btns" id="modal-btns"></div></div></div>
 <script>
@@ -339,7 +345,19 @@ function getToday(){return dstr(new Date());}
 function parseD(s){var p=s.split('-');return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));}
 function defaultData(){return{version:6,settings:{phasesUnlocked:[0],flareMode:false,createdAt:new Date().toISOString(),lastSyncAt:null,theme:'midnight',fontSize:'medium'},habitDefs:JSON.parse(JSON.stringify(DEFAULT_HABITS)),rewardDefs:JSON.parse(JSON.stringify(DEFAULT_REWARDS)),rewardClaims:[],habits:{},tasks:[],xpLedger:{},streaks:{current:0,best:0}};}
 function loadState(){try{var s=localStorage.getItem('bloom-data');if(s){var d=JSON.parse(s);if(!d.tasks||!Array.isArray(d.tasks))d.tasks=[];if(!d.settings.theme)d.settings.theme='midnight';if(!d.settings.fontSize)d.settings.fontSize='medium';if(!d.habitDefs)d.habitDefs=JSON.parse(JSON.stringify(DEFAULT_HABITS));if(!d.rewardDefs){d.rewardDefs=JSON.parse(JSON.stringify(DEFAULT_REWARDS));}else{d.rewardDefs.forEach(function(r){if(!r.supply)r.supply='repeatable';});}if(!d.rewardClaims)d.rewardClaims=[];if(d.settings.habitOverrides){d.habitDefs.forEach(function(h){var o=d.settings.habitOverrides[h.id];if(o){if(o.name)h.name=o.name;if(o.time)h.time=o.time;if(o.xp!==undefined)h.xp=o.xp;if(o.tag)h.tag=o.tag;}});delete d.settings.habitOverrides;}return d;}}catch(e){}return null;}
-function saveState(){try{try{var p=localStorage.getItem('bloom-data');if(p)localStorage.setItem('bloom-backup',p);}catch(e){}DATA.settings.lastSyncAt=new Date().toISOString();localStorage.setItem('bloom-data',JSON.stringify(DATA));}catch(e){}}
+function saveState(){try{try{var p=localStorage.getItem('bloom-data');if(p)localStorage.setItem('bloom-backup',p);}catch(e){}DATA.settings.lastSyncAt=new Date().toISOString();localStorage.setItem('bloom-data',JSON.stringify(DATA));}catch(e){}if(gdriveReady){if(syncTimer)clearTimeout(syncTimer);syncTimer=setTimeout(saveToDrive,2000);}}
+
+// GOOGLE DRIVE SYNC
+var GCID='521318504797-ht76jjmsj9fj88q6ida87n4khvmea3cd.apps.googleusercontent.com';
+var GFILE='bloom-data.json';var gdriveFileId=null;var gdriveReady=false;var gdriveToken=null;var syncTimer=null;
+function initGDrive(){if(typeof google==='undefined'||!google.accounts){setTimeout(initGDrive,500);return;}var t=localStorage.getItem('bloom-gdrive-token');if(t){gdriveToken=t;gdriveReady=true;document.getElementById('gdrive-banner').style.display='none';loadFromDrive();}else{document.getElementById('gdrive-banner').style.display='block';}}
+function connectGDrive(){var c=google.accounts.oauth2.initTokenClient({client_id:GCID,scope:'https://www.googleapis.com/auth/drive.file',callback:function(r){if(r.access_token){gdriveToken=r.access_token;gdriveReady=true;localStorage.setItem('bloom-gdrive-token',r.access_token);document.getElementById('gdrive-banner').style.display='none';showToast('Google Drive connected ☁️');loadFromDrive();}}});c.requestAccessToken();}
+function gH(){return{'Authorization':'Bearer '+gdriveToken,'Content-Type':'application/json'};}
+function findGFile(cb){fetch('https://www.googleapis.com/drive/v3/files?q=name%3D%27'+GFILE+'%27+and+trashed%3Dfalse&spaces=drive&fields=files(id)',{headers:gH()}).then(function(r){return r.json();}).then(function(d){cb(d.files&&d.files.length?d.files[0].id:null);}).catch(function(){cb(null);});}
+function loadFromDrive(){findGFile(function(fid){if(!fid){saveToDrive();return;}gdriveFileId=fid;fetch('https://www.googleapis.com/drive/v3/files/'+fid+'?alt=media',{headers:{'Authorization':'Bearer '+gdriveToken}}).then(function(r){return r.json();}).then(function(d){var ls=DATA.settings.lastSyncAt||'';var ds=d.settings&&d.settings.lastSyncAt||'';if(ds>ls){DATA=d;if(!DATA.tasks)DATA.tasks=[];if(!DATA.settings.theme)DATA.settings.theme='midnight';if(!DATA.settings.fontSize)DATA.settings.fontSize='medium';if(!DATA.habitDefs)DATA.habitDefs=JSON.parse(JSON.stringify(DEFAULT_HABITS));if(!DATA.rewardDefs)DATA.rewardDefs=JSON.parse(JSON.stringify(DEFAULT_REWARDS));if(!DATA.rewardClaims)DATA.rewardClaims=[];applyTheme(DATA.settings.theme);applyFontSize(DATA.settings.fontSize);renderHabits();renderWeek();renderHomeTasks();updateUI();localStorage.setItem('bloom-data',JSON.stringify(DATA));showToast('Synced from Drive ☁️');}else{saveToDrive();}}).catch(function(e){gdriveErr(e);})});}
+function saveToDrive(){if(!gdriveReady||!gdriveToken)return;var body=JSON.stringify(DATA);if(gdriveFileId){fetch('https://www.googleapis.com/upload/drive/v3/files/'+gdriveFileId+'?uploadType=media',{method:'PATCH',headers:{'Authorization':'Bearer '+gdriveToken,'Content-Type':'application/json'},body:body}).catch(function(e){gdriveErr(e);});}else{var form=new FormData();form.append('metadata',new Blob([JSON.stringify({name:GFILE,mimeType:'application/json'})],{type:'application/json'}));form.append('file',new Blob([body],{type:'application/json'}));fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{method:'POST',headers:{'Authorization':'Bearer '+gdriveToken},body:form}).then(function(r){return r.json();}).then(function(d){gdriveFileId=d.id;}).catch(function(e){gdriveErr(e);});}}
+function gdriveErr(e){gdriveToken=null;gdriveReady=false;localStorage.removeItem('bloom-gdrive-token');document.getElementById('gdrive-banner').style.display='block';showToast('Drive disconnected — tap banner to reconnect');}
+
 DATA=loadState()||defaultData();if(!DATA.settings.createdAt)DATA.settings.createdAt=new Date().toISOString();saveState();
 function getHabit(id){return DATA.habitDefs.find(function(h){return h.id===id;})||null;}
 function getAllHabits(){return DATA.habitDefs;}
@@ -576,6 +594,8 @@ function exportCSV(){var csv='Date,Type,Name,XP,Completed At\n';Object.keys(DATA
 function exportJSON(){var b=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='bloom-backup-'+getToday()+'.json';a.click();URL.revokeObjectURL(u);showToast('Backup saved!');}
 
 renderHabits();renderWeek();renderHomeTasks();updateUI();
+document.getElementById('gdrive-connect-btn').addEventListener('click',connectGDrive);
+initGDrive();
 </script>
 </body>
 </html>
