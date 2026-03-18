@@ -246,6 +246,12 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .a1{animation:fu .35s ease both}.a2{animation:fu .35s ease .05s both}.a3{animation:fu .35s ease .1s both}.a4{animation:fu .35s ease .15s both}.a5{animation:fu .35s ease .2s both}.a6{animation:fu .35s ease .25s both}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}.pop{animation:pop .25s ease}
+.life-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 14px;cursor:pointer;transition:all .2s;user-select:none;text-align:center}
+.life-card:active{transform:scale(.96);opacity:.8}
+.life-card-i{font-size:2rem;margin-bottom:8px}
+.life-card-n{font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.life-card-s{font-size:0.6875rem;color:var(--text-dim)}
+.life-soon{opacity:.45;cursor:default}.life-soon:active{transform:none;opacity:.45}
 @media(min-width:768px){.sidebar{display:flex;flex-direction:column}.main{margin-left:var(--sidebar-w)}.bn{display:none}.scroll{max-width:640px;padding:0 20px 40px}.hg{grid-template-columns:1fr 1fr 1fr}}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -258,6 +264,7 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <button class="sb-item act" data-nav="home"><span class="sb-item-i">🌿</span>Home</button>
 <button class="sb-item" data-nav="tasks"><span class="sb-item-i">📌</span>Tasks</button>
 <button class="sb-item" data-nav="calendar"><span class="sb-item-i">📅</span>Calendar</button>
+<button class="sb-item" data-nav="life"><span class="sb-item-i">🌱</span>Life</button>
 <button class="sb-item" data-nav="settings"><span class="sb-item-i">⚙️</span>Settings</button>
 <div class="sb-sec" style="margin-top:8px">Coming Soon</div>
 <button class="sb-item" data-nav="soon-meals"><span class="sb-item-i">🐟</span>Meals</button>
@@ -270,7 +277,7 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <div class="page active" id="page-home"><div class="scroll">
 <div class="topbar a1"><div class="tb-i">🌿</div><div class="tb-c"><div class="tb-g" id="greeting"></div><div class="tb-d" id="top-date"></div></div><div class="tb-b" id="xp-badge"><span style="font-size:0.8125rem">⚡</span><div class="tb-bv" id="total-xp-badge">0 Total XP</div></div></div>
 <div class="nav-s a2"><div class="nc" onclick="jumpTo('sec-habits')">✅ Habits</div><div class="nc" onclick="jumpTo('sec-home-tasks')">📌 Tasks</div><div class="nc" onclick="jumpTo('sec-week')">📅 Week</div><div class="nc" onclick="jumpTo('sec-chart')">📊 XP</div><div class="nc" onclick="jumpTo('sec-rewards')">🎁 Rewards</div></div>
-<div class="pb a3"><div class="pb-dot"></div><div><div class="pb-t">Phase 0 · The Pre-Condition</div><div class="pb-s">Walk before running</div></div></div>
+<div class="pb a3"><div class="pb-dot"></div><div><div class="pb-t">Daily Essentials · Your Foundation</div><div class="pb-s">Walk before running</div></div></div>
 <div class="sr a3"><div class="st"><div class="st-l">XP Today</div><div class="st-v gold" id="xp-today">0</div><div class="st-s" id="xp-today-max">of 80 possible</div></div><div class="st"><div class="st-l">Streak</div><div class="st-v teal" id="streak-val">0</div><div class="st-s" id="streak-sub">🌱 Starting</div></div><div class="st"><div class="st-l">Week</div><div class="st-v lav" id="week-badge" style="font-size:1.375rem;margin-top:2px">🌱</div><div class="st-s" id="week-badge-sub">Starting</div></div></div>
 <div class="prog a3"><div class="prog-top"><div><div class="prog-l">Today's Progress</div><div class="prog-n" id="prog-n">0 <span class="prog-ns">/ 6</span></div></div><div class="prog-p" id="prog-p">0%</div></div><div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div></div>
 <div class="sh a4" id="sec-habits"><div class="sh-t">Today's Habits</div><div class="sh-a" id="all-done"></div></div>
@@ -323,8 +330,29 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <div class="sh a4" style="padding-top:4px"><div class="sh-t" style="font-size:0.875rem">Export Data</div></div>
 <div class="ss a4" style="gap:8px"><button class="btn-e" onclick="exportCSV()">📊 Export CSV</button><button class="btn-e" onclick="exportJSON()">💾 Export JSON backup</button></div>
 </div></div>
+<div class="page" id="page-life"><div class="scroll" style="padding-top:8px">
+<div class="sh a1"><div class="sh-t">🌱 Life</div></div>
+<div style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+<div class="life-card a2" data-nav="symptoms"><div class="life-card-i">🩺</div><div class="life-card-n">Symptoms</div><div class="life-card-s">Flare log</div></div>
+<div class="life-card a2" data-nav="halloffame"><div class="life-card-i">🏆</div><div class="life-card-n">Hall of Fame</div><div class="life-card-s">Graduated habits</div></div>
+<div class="life-card a3 life-soon"><div class="life-card-i">🍽️</div><div class="life-card-n">Recipes</div><div class="life-card-s">Coming soon</div></div>
+<div class="life-card a3 life-soon"><div class="life-card-i">🩸</div><div class="life-card-n">Period Tracker</div><div class="life-card-s">Coming soon</div></div>
+<div class="life-card a4 life-soon"><div class="life-card-i">💪</div><div class="life-card-n">Workouts</div><div class="life-card-s">Coming soon</div></div>
+<div class="life-card a4 life-soon"><div class="life-card-i">📓</div><div class="life-card-n">Journal</div><div class="life-card-s">Coming soon</div></div>
+</div>
 </div></div>
-<div class="bn"><div class="ni act" data-nav="home"><div class="ni-i">🌿</div><div class="ni-l">Home</div></div><div class="ni" data-nav="tasks"><div class="ni-i">📌</div><div class="ni-l">Tasks</div></div><div class="ni" data-nav="calendar"><div class="ni-i">📅</div><div class="ni-l">Calendar</div></div><div class="ni" data-nav="settings"><div class="ni-i">⚙️</div><div class="ni-l">Settings</div></div></div>
+<div class="page" id="page-symptoms"><div class="scroll" style="padding-top:8px">
+<button class="day-back" id="symptoms-back">← Back to Life</button>
+<div class="sh a1"><div class="sh-t">🩺 Symptoms</div></div>
+<div id="symptoms-list" style="padding:0 16px 16px"></div>
+</div></div>
+<div class="page" id="page-halloffame"><div class="scroll" style="padding-top:8px">
+<button class="day-back" id="hof-back">← Back to Life</button>
+<div class="sh a1"><div class="sh-t">🏆 Hall of Fame</div></div>
+<div class="sh a2" style="padding-top:0"><div class="sh-t" style="font-size:0.75rem;color:var(--text-dim);font-weight:400">Habits you've graduated out of 🎓</div></div>
+<div id="hof-list" style="padding:0 16px 16px"></div>
+</div></div>
+<div class="bn"><div class="ni act" data-nav="home"><div class="ni-i">🌿</div><div class="ni-l">Home</div></div><div class="ni" data-nav="tasks"><div class="ni-i">📌</div><div class="ni-l">Tasks</div></div><div class="ni" data-nav="calendar"><div class="ni-i">📅</div><div class="ni-l">Calendar</div></div><div class="ni" data-nav="life"><div class="ni-i">🌱</div><div class="ni-l">Life</div></div><div class="ni" data-nav="settings"><div class="ni-i">⚙️</div><div class="ni-l">Settings</div></div></div>
 <div id="gdrive-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:300;background:var(--gold-bg);border-bottom:1px solid var(--gold-dim);padding:12px 16px;text-align:center">
 <div style="font-size:0.875rem;font-weight:600;color:var(--gold);margin-bottom:6px">Connect to Google Drive to save your data</div>
 <button id="gdrive-connect-btn" style="background:var(--gold);color:#12111A;border:none;border-radius:8px;padding:8px 20px;font-size:0.875rem;font-weight:700;cursor:pointer;font-family:inherit">Connect Google Drive</button>
@@ -334,7 +362,7 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <script>
 var DEFAULT_HABITS=[{id:"breakfast",name:"Breakfast",time:"11am – 12pm",tag:"mcas",xp:15,phase:0},{id:"lunch",name:"Lunch",time:"3 – 4pm",tag:"core",xp:20,phase:0},{id:"water",name:"Water",time:"All day",tag:"core",xp:10,phase:0},{id:"computer_off",name:"Computer Off",time:"By 7pm",tag:"core",xp:15,phase:0},{id:"pm_dinner",name:"PM Dinner",time:"8 – 9pm",tag:"mcas",xp:10,phase:0},{id:"bedtime",name:"Bedtime",time:"By 12:30am",tag:"core",xp:10,phase:0},{id:"wash",name:"Wash",time:"10pm+",tag:"core",xp:25,phase:1},{id:"skincare",name:"Skincare",time:"10pm+",tag:"core",xp:20,phase:1},{id:"tidy_10",name:"10-min Tidy",time:"10pm+",tag:"core",xp:15,phase:1},{id:"supps_am",name:"Supplements AM",time:"11am – 12pm",tag:"mcas",xp:10,phase:1},{id:"supps_pm",name:"Supplements PM",time:"8 – 9pm",tag:"mcas",xp:10,phase:1},{id:"supps_bed",name:"Supplements Bedtime",time:"12:30am",tag:"mcas",xp:10,phase:1},{id:"movement",name:"Movement",time:"Any time",tag:"core",xp:20,phase:2},{id:"clean_15",name:"15-min Clean",time:"Daily rotation",tag:"core",xp:20,phase:2},{id:"meal_prep",name:"Meal Prep",time:"Evening",tag:"mcas",xp:15,phase:2},{id:"workout",name:"Workout",time:"3–4x weekly",tag:"core",xp:25,phase:2}];
 var DEFAULT_REWARDS=[{id:"clothing",emoji:"👗",name:"Clothing — guilt-free",cost:50,type:"xp",supply:"repeatable"},{id:"meal",emoji:"🍽️",name:"Fave meal, your way",cost:100,type:"xp",supply:"repeatable"},{id:"freeday",emoji:"☀️",name:"A whole free day",cost:250,type:"xp",supply:"repeatable"},{id:"haul",emoji:"🛍️",name:"Full fashion haul",cost:1000,type:"xp",supply:"onetime"},{id:"mac",emoji:"💻",name:"The Mac.",cost:null,type:"goal",supply:"onetime",note:"Goal weight 🎯"}];
-var PHASES=[{id:0,name:"Phase 0",sub:"The Pre-Condition",week:1},{id:1,name:"Phase 1",sub:"Building Structure",week:3},{id:2,name:"Phase 2",sub:"Adding Capacity",week:7}];
+var PHASES=[{id:0,name:"Daily Essentials",sub:"Your foundation",week:1},{id:1,name:"Phase 1",sub:"Building Structure",week:3},{id:2,name:"Phase 2",sub:"Adding Capacity",week:7}];
 var GREETINGS={overnight:["Still up, Suvi? 🌙","The moon's watching, Suvi 🌛","Even stars sleep, Suvi 🕯️"],earlyMorning:["Early bird, Suvi! 🌤️","Up before the sun, Suvi ☀️","Fresh start, Suvi 🌱"],morning:["Morning, Suvi! ☀️","Rise & restore, Suvi 🌿","Good morning, Suvi ✨"],afternoon:["Afternoon, Suvi 🌻","Midday check-in, Suvi ⚡","Lunch yet, Suvi? 🥗"],evening:["Evening mode, Suvi 🌙","Golden hours, Suvi 🌿","Your time now, Suvi ✨"]};
 var TOAST_MSGS={breakfast:["Breakfast done 🥗","Fed yourself!"],lunch:["Lunch break! 🥗","You ate. That matters."],water:["Hydrated 💧","Water is medicine"],bedtime:["Rest earned 😴"],wash:["Fresh & clean 🚿"],skincare:["Skin loved 💆"],workout:["Beast mode 💪"]};
 var DIFF_LABELS={"5":"Tiny","10":"Small","20":"Medium","50":"Hard","100":"Epic"};
@@ -343,8 +371,11 @@ function pick(a){return a[Math.floor(Math.random()*a.length)];}
 function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function getToday(){return dstr(new Date());}
 function parseD(s){var p=s.split('-');return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));}
-function defaultData(){return{version:6,settings:{phasesUnlocked:[0],flareMode:false,createdAt:new Date().toISOString(),lastSyncAt:null,theme:'midnight',fontSize:'medium'},habitDefs:JSON.parse(JSON.stringify(DEFAULT_HABITS)),rewardDefs:JSON.parse(JSON.stringify(DEFAULT_REWARDS)),rewardClaims:[],habits:{},tasks:[],xpLedger:{},streaks:{current:0,best:0}};}
-function loadState(){try{var s=localStorage.getItem('bloom-data');if(s){var d=JSON.parse(s);if(!d.tasks||!Array.isArray(d.tasks))d.tasks=[];if(!d.settings.theme)d.settings.theme='midnight';if(!d.settings.fontSize)d.settings.fontSize='medium';if(!d.habitDefs)d.habitDefs=JSON.parse(JSON.stringify(DEFAULT_HABITS));if(!d.rewardDefs){d.rewardDefs=JSON.parse(JSON.stringify(DEFAULT_REWARDS));}else{d.rewardDefs.forEach(function(r){if(!r.supply)r.supply='repeatable';});}if(!d.rewardClaims)d.rewardClaims=[];if(d.settings.habitOverrides){d.habitDefs.forEach(function(h){var o=d.settings.habitOverrides[h.id];if(o){if(o.name)h.name=o.name;if(o.time)h.time=o.time;if(o.xp!==undefined)h.xp=o.xp;if(o.tag)h.tag=o.tag;}});delete d.settings.habitOverrides;}return d;}}catch(e){}return null;}
+function defaultData(){return{version:7,settings:{phasesUnlocked:[0],createdAt:new Date().toISOString(),lastSyncAt:null,theme:'midnight',fontSize:'medium'},habitDefs:JSON.parse(JSON.stringify(DEFAULT_HABITS)),rewardDefs:JSON.parse(JSON.stringify(DEFAULT_REWARDS)),rewardClaims:[],habits:{},tasks:[],xpLedger:{},streaks:{current:0,best:0},streakMilestonesAwarded:[]};}
+function loadState(){try{var s=localStorage.getItem('bloom-data');if(s){var d=JSON.parse(s);if(!d.tasks||!Array.isArray(d.tasks))d.tasks=[];if(!d.settings.theme)d.settings.theme='midnight';if(!d.settings.fontSize)d.settings.fontSize='medium';if(!d.habitDefs)d.habitDefs=JSON.parse(JSON.stringify(DEFAULT_HABITS));if(!d.rewardDefs){d.rewardDefs=JSON.parse(JSON.stringify(DEFAULT_REWARDS));}else{d.rewardDefs.forEach(function(r){if(!r.supply)r.supply='repeatable';});}if(!d.rewardClaims)d.rewardClaims=[];if(d.settings.habitOverrides){d.habitDefs.forEach(function(h){var o=d.settings.habitOverrides[h.id];if(o){if(o.name)h.name=o.name;if(o.time)h.time=o.time;if(o.xp!==undefined)h.xp=o.xp;if(o.tag)h.tag=o.tag;}});delete d.settings.habitOverrides;}
+// v7 migration
+if(!d.streakMilestonesAwarded)d.streakMilestonesAwarded=[];d.habitDefs.forEach(function(h){if(h.retired===undefined)h.retired=false;if(h.retiredDate===undefined)h.retiredDate=null;});delete d.settings.flareMode;d.version=7;
+return d;}}catch(e){}return null;}
 function saveState(){try{try{var p=localStorage.getItem('bloom-data');if(p)localStorage.setItem('bloom-backup',p);}catch(e){}DATA.settings.lastSyncAt=new Date().toISOString();localStorage.setItem('bloom-data',JSON.stringify(DATA));}catch(e){}if(gdriveReady){if(syncTimer)clearTimeout(syncTimer);syncTimer=setTimeout(saveToDrive,2000);}}
 
 // GOOGLE DRIVE SYNC
@@ -360,7 +391,8 @@ function gdriveErr(e){gdriveToken=null;gdriveReady=false;localStorage.removeItem
 
 DATA=loadState()||defaultData();if(!DATA.settings.createdAt)DATA.settings.createdAt=new Date().toISOString();saveState();
 function getHabit(id){return DATA.habitDefs.find(function(h){return h.id===id;})||null;}
-function getAllHabits(){return DATA.habitDefs;}
+function getAllHabits(){return DATA.habitDefs.filter(function(h){return !h.retired;});}
+function getRetiredHabits(){return DATA.habitDefs.filter(function(h){return h.retired;});}
 function getRewards(){return DATA.rewardDefs;}
 function getXPEarned(){var t=0;Object.keys(DATA.xpLedger).forEach(function(d){DATA.xpLedger[d].entries.forEach(function(e){t+=e.amount;});});return t;}
 function getAllXP(){return getXPEarned();}
@@ -382,7 +414,10 @@ document.getElementById('top-date').textContent=new Date().toLocaleDateString('e
 var toastTimer;function showToast(m){var e=document.getElementById('toast-el');e.textContent=m;e.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){e.classList.remove('show');},2600);}
 
 var currentNav='home',prevNav='home';
-function goNav(page){if(page.indexOf('soon-')===0){showToast(page.replace('soon-','').charAt(0).toUpperCase()+page.replace('soon-','').slice(1)+' — coming soon');return;}prevNav=currentNav;currentNav=page;document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});var t=document.getElementById('page-'+page);if(t)t.classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('act');});var sm=document.querySelector('.sb-item[data-nav="'+page+'"]');if(sm)sm.classList.add('act');document.querySelectorAll('.bn .ni').forEach(function(n){n.classList.remove('act');});var bm=document.querySelector('.bn .ni[data-nav="'+page+'"]');if(bm)bm.classList.add('act');if(page==='settings')renderSettings();if(page==='tasks'){renderTasksTodo();renderTasksDone();}if(page==='calendar'){showCalView();renderCalendar();}if(page==='xplog'){xpLogShown=0;renderXPLog();}window.scrollTo(0,0);}
+function goNav(page){if(page.indexOf('soon-')===0){showToast(page.replace('soon-','').charAt(0).toUpperCase()+page.replace('soon-','').slice(1)+' — coming soon');return;}prevNav=currentNav;currentNav=page;document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});var t=document.getElementById('page-'+page);if(t)t.classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('act');});var sm=document.querySelector('.sb-item[data-nav="'+page+'"]');if(sm)sm.classList.add('act');document.querySelectorAll('.bn .ni').forEach(function(n){n.classList.remove('act');});var bm=document.querySelector('.bn .ni[data-nav="'+page+'"]');if(bm)bm.classList.add('act');
+// highlight Life in nav for sub-pages
+if(page==='symptoms'||page==='halloffame'){var lb=document.querySelector('.bn .ni[data-nav="life"]');if(lb)lb.classList.add('act');var slb=document.querySelector('.sb-item[data-nav="life"]');if(slb)slb.classList.add('act');}
+if(page==='settings')renderSettings();if(page==='tasks'){renderTasksTodo();renderTasksDone();}if(page==='calendar'){showCalView();renderCalendar();}if(page==='xplog'){xpLogShown=0;renderXPLog();}if(page==='symptoms')renderSymptoms();if(page==='halloffame')renderHallOfFame();window.scrollTo(0,0);}
 document.querySelectorAll('[data-nav]').forEach(function(el){el.addEventListener('click',function(){goNav(this.getAttribute('data-nav'));});});
 function jumpTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 document.getElementById('xp-badge').addEventListener('click',function(){goNav('xplog');});
@@ -395,14 +430,17 @@ document.getElementById('modal-bg').addEventListener('click',function(e){if(e.ta
 var checkSvg='<svg class="ck" width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 function renderHabits(){var area=document.getElementById('habit-area');var today=getToday();var todayH=DATA.habits[today]||{};var habits=getAllHabits();var html='';
-PHASES.forEach(function(p){var ul=DATA.settings.phasesUnlocked.indexOf(p.id)>=0;var ph=habits.filter(function(h){return h.phase===p.id;});
-html+='<div class="grp"'+(p.id>0?' style="margin-top:12px"':'')+'><div class="grp-n">'+p.name+' · '+(ul?p.sub:'Unlocks Week '+p.week)+'</div><div class="grp-l"></div></div><div class="hg">';
-ph.forEach(function(h){var done=todayH[h.id]&&todayH[h.id].done;var pc=h.phase===0?'pg':h.phase===1?'pt2':'pl';var lk=!ul;
-html+='<div class="ht '+pc+(done?' done':'')+(lk?' lk':'')+'" data-hid="'+h.id+'" id="tile-'+h.id+'"><div class="ht-top"><div class="ht-ck">'+checkSvg+'</div><div class="ht-mg"><div class="ht-tm">'+h.time+'</div><div class="ht-tg '+(h.tag==='core'?'tg-c':'tg-m')+'">'+(h.tag==='core'?'Core':'MCAS-safe')+'</div></div><div class="ht-xp">+'+h.xp+'</div></div><div class="ht-nm">'+(lk?'🔒 '+h.name:h.name)+'</div></div>';});
-if(ul)html+='<div class="ht" style="min-height:60px;align-items:center;justify-content:center;border-style:dashed;opacity:.5;cursor:pointer" data-addphase="'+p.id+'"><div class="ht-nm" style="color:var(--text-dim);font-size:0.8125rem">+ Add habit</div></div>';
+PHASES.forEach(function(p){var ul=DATA.settings.phasesUnlocked.indexOf(p.id)>=0;
+// Hide locked phases entirely on home page
+if(!ul)return;
+var ph=habits.filter(function(h){return h.phase===p.id&&!h.retired;});
+html+='<div class="grp"'+(p.id>0?' style="margin-top:12px"':'')+'><div class="grp-n">'+p.name+' · '+p.sub+'</div><div class="grp-l"></div></div><div class="hg">';
+ph.forEach(function(h){var done=todayH[h.id]&&todayH[h.id].done;var pc=h.phase===0?'pg':h.phase===1?'pt2':'pl';
+html+='<div class="ht '+pc+(done?' done':'')+'" data-hid="'+h.id+'" id="tile-'+h.id+'"><div class="ht-top"><div class="ht-ck">'+checkSvg+'</div><div class="ht-mg"><div class="ht-tm">'+h.time+'</div><div class="ht-tg '+(h.tag==='core'?'tg-c':'tg-m')+'">'+(h.tag==='core'?'Core':'MCAS-safe')+'</div></div><div class="ht-xp">+'+h.xp+'</div></div><div class="ht-nm">'+h.name+'</div></div>';});
+html+='<div class="ht" style="min-height:60px;align-items:center;justify-content:center;border-style:dashed;opacity:.5;cursor:pointer" data-addphase="'+p.id+'"><div class="ht-nm" style="color:var(--text-dim);font-size:0.8125rem">+ Add habit</div></div>';
 html+='</div>';});
 area.innerHTML=html;
-area.querySelectorAll('.ht:not(.lk):not([data-addphase])').forEach(function(tile){var hid=tile.getAttribute('data-hid');if(!hid)return;tile.addEventListener('click',function(){tapHabit(hid,getToday());});var pt;tile.addEventListener('touchstart',function(){pt=setTimeout(function(){editHabit(hid);},600);},{passive:true});tile.addEventListener('touchend',function(){clearTimeout(pt);});tile.addEventListener('touchmove',function(){clearTimeout(pt);});tile.addEventListener('dblclick',function(){editHabit(hid);});});
+area.querySelectorAll('.ht:not([data-addphase])').forEach(function(tile){var hid=tile.getAttribute('data-hid');if(!hid)return;tile.addEventListener('click',function(){tapHabit(hid,getToday());});var pt;tile.addEventListener('touchstart',function(){pt=setTimeout(function(){editHabit(hid);},600);},{passive:true});tile.addEventListener('touchend',function(){clearTimeout(pt);});tile.addEventListener('touchmove',function(){clearTimeout(pt);});tile.addEventListener('dblclick',function(){editHabit(hid);});});
 area.querySelectorAll('[data-addphase]').forEach(function(btn){btn.addEventListener('click',function(){addHabit(parseInt(this.getAttribute('data-addphase')));});});}
 
 function tapHabit(id,dateStr){if(!DATA.habits[dateStr])DATA.habits[dateStr]={};if(!DATA.xpLedger[dateStr])DATA.xpLedger[dateStr]={entries:[]};
@@ -482,7 +520,36 @@ wrap.appendChild(container);
 document.getElementById('task-add-btn').addEventListener('click',function(){addTask(document.getElementById('task-input'),document.getElementById('task-diff'),document.getElementById('task-due'));});
 document.getElementById('task-input').addEventListener('keydown',function(e){if(e.key==='Enter')addTask(document.getElementById('task-input'),document.getElementById('task-diff'),document.getElementById('task-due'));});
 
-function updateStreaks(){var ad={};Object.keys(DATA.habits).forEach(function(d){if(Object.values(DATA.habits[d]).some(function(x){return x.done;}))ad[d]=true;});DATA.tasks.forEach(function(t){if(t.completedAt)ad[t.completedAt.slice(0,10)]=true;});var sorted=Object.keys(ad).sort();var streak=0,td=new Date(getToday());for(var i=0;i<=365;i++){var cd=new Date(td);cd.setDate(td.getDate()-i);var d=dstr(cd);if(sorted.indexOf(d)>=0)streak++;else if(i===0)continue;else break;}DATA.streaks.current=streak;if(streak>DATA.streaks.best)DATA.streaks.best=streak;}
+function updateStreaks(){
+// Build set of days where at least 1 habit was checked (tasks no longer count for streak)
+var ad={};
+Object.keys(DATA.habits).forEach(function(d){
+  var dayData=DATA.habits[d];
+  var hasHabit=Object.keys(dayData).filter(function(k){return k!=='flare'&&k!=='flareNote';}).some(function(k){return dayData[k]&&dayData[k].done;});
+  if(hasHabit)ad[d]=true;
+});
+// Walk back from today counting consecutive days
+var streak=0;var td=new Date(getToday());
+for(var i=0;i<=365;i++){
+  var cd=new Date(td);cd.setDate(td.getDate()-i);var d=dstr(cd);
+  if(ad[d]){streak++;}
+  else if(i===0){/* today has no habits yet — don't break, just don't count */}
+  else{break;}
+}
+DATA.streaks.current=streak;
+if(streak>DATA.streaks.best)DATA.streaks.best=streak;
+// Streak milestone XP awards (every 10 days, XP = days/2, once per milestone)
+if(!DATA.streakMilestonesAwarded)DATA.streakMilestonesAwarded=[];
+var milestone=Math.floor(streak/10)*10;
+if(milestone>0&&DATA.streakMilestonesAwarded.indexOf(milestone)<0){
+  DATA.streakMilestonesAwarded.push(milestone);
+  var mxp=milestone/2;
+  var today=getToday();
+  if(!DATA.xpLedger[today])DATA.xpLedger[today]={entries:[]};
+  DATA.xpLedger[today].entries.push({source:'streak',id:'streak_'+milestone,amount:mxp,ts:new Date().toISOString()});
+  showToast('🔥 '+milestone+'-day streak! +'+mxp+' XP');
+}
+}
 
 document.getElementById('flare-card').addEventListener('click',function(){DATA.settings.flareMode=!DATA.settings.flareMode;document.getElementById('flare-tog').classList.toggle('on',DATA.settings.flareMode);document.getElementById('flare-desc').textContent=DATA.settings.flareMode?'On — 3 habits only. Rest counts today.':'Switch to 3-habit survival mode';if(DATA.settings.flareMode)showToast('⚡ Flare mode. Just 3 things today.');saveState();});
 
@@ -502,7 +569,7 @@ for(var i=0;i<all.length;i++){balances.push(runBal);var e=all[i];if(e.type==='ea
 var start=xpLogShown;var end=Math.min(start+50,all.length);
 if(start===0&&!all.length){list.innerHTML='<div class="task-empty">No XP activity yet</div>';return;}
 for(var i=start;i<end;i++){var e=all[i];var name='',icon='';
-if(e.type==='earn'){if(e.source==='habit'){var h=getHabit(e.id);name=h?h.name:e.id;icon='✅';}else{var t=DATA.tasks.find(function(x){return x.id===e.id;});name=t?t.name:'Task';icon='📌';}}
+if(e.type==='earn'){if(e.source==='habit'){var h=getHabit(e.id);name=h?h.name:DATA.habitDefs.find(function(x){return x.id===e.id;})?DATA.habitDefs.find(function(x){return x.id===e.id;}).name:e.id;icon='✅';}else if(e.source==='streak'){var days=e.id.replace('streak_','');name=days+'-day streak milestone';icon='🔥';}else{var t=DATA.tasks.find(function(x){return x.id===e.id;});name=t?t.name:'Task';icon='📌';}}
 else if(e.type==='spend'){name=e.name||'Reward';icon=e.emoji||'🎁';}
 else{name=(e.name||'Reward')+' (refund)';icon='↩️';}
 var time=e.ts?new Date(e.ts).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'';
@@ -515,7 +582,7 @@ list.appendChild(div);}xpLogShown=end;
 var old=list.querySelector('.xp-load-more');if(old)old.remove();
 if(end<all.length){var more=document.createElement('div');more.className='xp-load-more';more.textContent='Load more...';more.addEventListener('click',function(){renderXPLog();});list.appendChild(more);}}
 
-function updateUI(){var today=getToday();var todayH=DATA.habits[today]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0;});var totalA=active.length;var doneC=active.filter(function(h){return todayH[h.id]&&todayH[h.id].done;}).length;var xpTd=active.reduce(function(s,h){return s+(todayH[h.id]&&todayH[h.id].done?h.xp:0);},0);var maxXP=active.reduce(function(s,h){return s+h.xp;},0);var taskXpTd=0;DATA.tasks.forEach(function(t){if(t.completedAt&&t.completedAt.slice(0,10)===today)taskXpTd+=t.xp;});xpTd+=taskXpTd;var allXP=getAllXP();var pct=totalA>0?Math.round(doneC/totalA*100):0;
+function updateUI(){var today=getToday();var todayH=DATA.habits[today]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0;});var totalA=active.length;var doneC=active.filter(function(h){return todayH[h.id]&&todayH[h.id].done;}).length;var xpTd=active.reduce(function(s,h){return s+(todayH[h.id]&&todayH[h.id].done?h.xp:0);},0);var maxXP=active.reduce(function(s,h){return s+h.xp;},0);var taskXpTd=0;DATA.tasks.forEach(function(t){var cDate=t.completedDate||(t.completedAt?t.completedAt.slice(0,10):null);if(cDate===today)taskXpTd+=t.xp;});xpTd+=taskXpTd;var allXP=getAllXP();var pct=totalA>0?Math.round(doneC/totalA*100):0;
 document.getElementById('xp-today').textContent=xpTd;document.getElementById('xp-today-max').textContent='of '+maxXP+' + tasks';document.getElementById('total-xp-badge').textContent=allXP+' Total XP';document.getElementById('alltime-xp').textContent=allXP;document.getElementById('streak-val').textContent=DATA.streaks.current;document.getElementById('streak-sub').textContent=DATA.streaks.current===0?'🌱 Starting':DATA.streaks.current===1?'🌱 Day one':'🔥 '+DATA.streaks.current+' days';
 var wb='🌱',ws='Starting';if(doneC>=totalA&&totalA>0){wb='🏆';ws='Perfect day';}else if(doneC>=6){wb='🥇';ws='Strong day';}else if(doneC>=3){wb='🥈';ws='Solid day';}else if(doneC>=1){wb='🥉';ws='Showed up';}
 document.getElementById('week-badge').textContent=wb;document.getElementById('week-badge-sub').textContent=ws;document.getElementById('prog-n').innerHTML=doneC+' <span class="prog-ns">/ '+totalA+'</span>';document.getElementById('prog-p').textContent=pct+'%';document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('all-done').textContent=doneC>=totalA&&totalA>0?'✦ All done!':'';document.getElementById('flare-tog').classList.toggle('on',DATA.settings.flareMode);
@@ -584,7 +651,7 @@ document.getElementById('day-back').addEventListener('click',function(){showCalV
 document.getElementById('day-prev').addEventListener('click',function(){var d=parseD(dayViewDate);d.setDate(d.getDate()-1);dayViewDate=dstr(d);renderDayView(dayViewDate);});
 document.getElementById('day-next').addEventListener('click',function(){var d=parseD(dayViewDate);d.setDate(d.getDate()+1);dayViewDate=dstr(d);renderDayView(dayViewDate);});
 function renderCalendar(){var months=['January','February','March','April','May','June','July','August','September','October','November','December'];document.getElementById('cal-month').textContent=months[calMonth]+' '+calYear;var grid=document.getElementById('cal-grid');grid.innerHTML='';['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(d){grid.innerHTML+='<div class="cal-dow">'+d+'</div>';});var first=new Date(calYear,calMonth,1);var startDay=first.getDay()||7;var daysInMonth=new Date(calYear,calMonth+1,0).getDate();var today=getToday();for(var i=1;i<startDay;i++){grid.innerHTML+='<div class="cal-day empty"></div>';}for(var d=1;d<=daysInMonth;d++){var dateStr=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');var isToday=dateStr===today;var hasData=getDayXP(dateStr)>0;var el=document.createElement('div');el.className='cal-day'+(isToday?' today':'')+(hasData?' has-data':'');el.setAttribute('data-date',dateStr);el.innerHTML=d+'<div class="cal-pip"></div>';el.addEventListener('click',function(){dayViewDate=this.getAttribute('data-date');showDayView();renderDayView(dayViewDate);});grid.appendChild(el);}}
-function renderDayView(dateStr){var d=parseD(dateStr);var today=getToday();var isToday=dateStr===today;document.getElementById('day-title').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});document.getElementById('day-sub').textContent=isToday?'Today':d.toLocaleDateString('en-US',{year:'numeric'});var dayXP=getDayXP(dateStr);var dh=DATA.habits[dateStr]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0;});var habitsDone=active.filter(function(h){return dh[h.id]&&dh[h.id].done;}).length;document.getElementById('day-stat').innerHTML='<div><div class="st-l">XP</div><div class="st-v gold" style="font-size:1.375rem">'+dayXP+'</div></div><div><div class="st-l">Habits</div><div class="st-v teal" style="font-size:1.375rem">'+habitsDone+'/'+active.length+'</div></div>';var hArea=document.getElementById('day-habits');hArea.innerHTML='';active.forEach(function(h){var done=dh[h.id]&&dh[h.id].done;var pc=h.phase===0?'pg':h.phase===1?'pt2':'pl';var el=document.createElement('div');el.className='ht '+pc+(done?' done':'');el.innerHTML='<div class="ht-top"><div class="ht-ck">'+checkSvg+'</div><div class="ht-mg"><div class="ht-tm">'+h.time+'</div><div class="ht-tg '+(h.tag==='core'?'tg-c':'tg-m')+'">'+(h.tag==='core'?'Core':'MCAS-safe')+'</div></div><div class="ht-xp">+'+h.xp+'</div></div><div class="ht-nm">'+h.name+'</div>';el.addEventListener('click',function(){tapHabit(h.id,dateStr);});hArea.appendChild(el);});var tArea=document.getElementById('day-tasks');tArea.innerHTML='';var dayTasks=DATA.tasks.filter(function(t){return t.completedAt&&t.completedAt.slice(0,10)===dateStr;});if(!dayTasks.length){tArea.innerHTML='<div class="task-empty">No tasks completed</div>';return;}dayTasks.forEach(function(t){var el=document.createElement('div');el.className='task-item t-done';el.innerHTML='<div class="ht-ck">'+checkSvg+'</div><div class="task-info"><div class="task-name">'+t.name+'</div><div class="task-meta"><span>+'+t.xp+' XP</span></div></div>';tArea.appendChild(el);});}
+function renderDayView(dateStr){var d=parseD(dateStr);var today=getToday();var isToday=dateStr===today;document.getElementById('day-title').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});document.getElementById('day-sub').textContent=isToday?'Today':d.toLocaleDateString('en-US',{year:'numeric'});var dayXP=getDayXP(dateStr);var dh=DATA.habits[dateStr]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0&&!h.retired;});var habitsDone=active.filter(function(h){return dh[h.id]&&dh[h.id].done;}).length;document.getElementById('day-stat').innerHTML='<div><div class="st-l">XP</div><div class="st-v gold" style="font-size:1.375rem">'+dayXP+'</div></div><div><div class="st-l">Habits</div><div class="st-v teal" style="font-size:1.375rem">'+habitsDone+'/'+active.length+'</div></div>';var hArea=document.getElementById('day-habits');hArea.innerHTML='';active.forEach(function(h){var done=dh[h.id]&&dh[h.id].done;var pc=h.phase===0?'pg':h.phase===1?'pt2':'pl';var el=document.createElement('div');el.className='ht '+pc+(done?' done':'');el.innerHTML='<div class="ht-top"><div class="ht-ck">'+checkSvg+'</div><div class="ht-mg"><div class="ht-tm">'+h.time+'</div><div class="ht-tg '+(h.tag==='core'?'tg-c':'tg-m')+'">'+(h.tag==='core'?'Core':'MCAS-safe')+'</div></div><div class="ht-xp">+'+h.xp+'</div></div><div class="ht-nm">'+h.name+'</div>';el.addEventListener('click',function(){tapHabit(h.id,dateStr);});hArea.appendChild(el);});var tArea=document.getElementById('day-tasks');tArea.innerHTML='';var dayTasks=DATA.tasks.filter(function(t){var cDate=t.completedDate||(t.completedAt?t.completedAt.slice(0,10):null);return cDate===dateStr;});if(!dayTasks.length){tArea.innerHTML='<div class="task-empty">No tasks completed</div>';return;}dayTasks.forEach(function(t){var el=document.createElement('div');el.className='task-item t-done';el.innerHTML='<div class="ht-ck">'+checkSvg+'</div><div class="task-info"><div class="task-name">'+t.name+'</div><div class="task-meta"><span>+'+t.xp+' XP</span></div></div>';tArea.appendChild(el);});}
 
 function renderSettings(){var html='';PHASES.forEach(function(p){var ul=DATA.settings.phasesUnlocked.indexOf(p.id)>=0;html+='<div class="ss-r"><div><div style="font-size:0.875rem;font-weight:600">'+p.name+' · '+p.sub+'</div><div style="font-size:0.6875rem;color:var(--text-dim)">Unlocks week '+p.week+'</div></div>';if(p.id===0)html+='<div style="font-size:0.6875rem;color:var(--teal);font-weight:600">Always active</div>';else html+='<button class="btn-p'+(ul?' on':'')+'" data-phase="'+p.id+'">'+(ul?'✓ Active':'Unlock')+'</button>';html+='</div>';});document.getElementById('phase-mgmt').innerHTML=html;document.querySelectorAll('[data-phase]').forEach(function(b){b.addEventListener('click',function(){togglePhase(parseInt(this.getAttribute('data-phase')));});});document.getElementById('set-lastsave').textContent=DATA.settings.lastSyncAt?new Date(DATA.settings.lastSyncAt).toLocaleString():'Never';document.getElementById('set-created').textContent=DATA.settings.createdAt?new Date(DATA.settings.createdAt).toLocaleDateString():'—';document.getElementById('set-days').textContent=Object.keys(DATA.habits).length;document.getElementById('set-best').textContent=DATA.streaks.best+' days';document.querySelectorAll('.theme-opt[data-theme]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-theme')===DATA.settings.theme);b.addEventListener('click',function(){applyTheme(this.getAttribute('data-theme'));renderSettings();showToast('Theme: '+this.textContent.trim());});});
 document.querySelectorAll('.theme-opt[data-fsize]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-fsize')===DATA.settings.fontSize);b.addEventListener('click',function(){applyFontSize(this.getAttribute('data-fsize'));document.querySelectorAll('.theme-opt[data-fsize]').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-fsize')===DATA.settings.fontSize);});showToast('Font: '+this.textContent.trim());});});}
@@ -594,6 +661,14 @@ function exportCSV(){var csv='Date,Type,Name,XP,Completed At\n';Object.keys(DATA
 function exportJSON(){var b=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='bloom-backup-'+getToday()+'.json';a.click();URL.revokeObjectURL(u);showToast('Backup saved!');}
 
 renderHabits();renderWeek();renderHomeTasks();updateUI();
+function renderSymptoms(){var list=document.getElementById('symptoms-list');if(!list)return;var entries=[];Object.keys(DATA.habits).sort().reverse().forEach(function(d){var day=DATA.habits[d];if(day.flare&&day.flareNote&&day.flareNote.trim()){entries.push({date:d,note:day.flareNote.trim()});}});if(!entries.length){list.innerHTML='<div class="task-empty">No symptoms logged yet.<br><br>Toggle Flare Day on the home page to start tracking.</div>';return;}var html='';entries.forEach(function(e){var d=parseD(e.date);var dLabel=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});html+='<div class="ss a1" style="margin-bottom:10px"><div style="font-size:0.75rem;font-weight:700;color:var(--rose);margin-bottom:6px">🌡️ '+dLabel+'</div><div style="font-size:0.875rem;color:var(--text);line-height:1.5">'+e.note+'</div></div>';});list.innerHTML=html;}
+
+function renderHallOfFame(){var list=document.getElementById('hof-list');if(!list)return;var retired=getRetiredHabits();if(!retired.length){list.innerHTML='<div class="task-empty">Nothing graduated yet.<br><br>When a habit becomes second nature, retire it from the edit menu — it\'ll live here. 🎓</div>';return;}var html='';retired.forEach(function(h){var completions=0;var totalXP=0;Object.keys(DATA.xpLedger).forEach(function(d){DATA.xpLedger[d].entries.forEach(function(e){if(e.source==='habit'&&e.id===h.id){completions++;totalXP+=e.amount;}});});var pName=PHASES.find(function(p){return p.id===h.phase;});var pLabel=pName?pName.name:'Unknown phase';var retDate=h.retiredDate?parseD(h.retiredDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'';html+='<div class="ss a1" style="margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="font-size:1.375rem">🎓</div><div><div style="font-size:0.9375rem;font-weight:700;color:var(--gold)">'+h.name+'</div><div style="font-size:0.6875rem;color:var(--text-dim)">'+pLabel+(retDate?' · Retired '+retDate:'')+'</div></div></div><div style="display:flex;gap:20px"><div><div class="st-l">Completions</div><div style="font-size:1.0625rem;font-weight:700;color:var(--teal)">'+completions+'</div></div><div><div class="st-l">Total XP earned</div><div style="font-size:1.0625rem;font-weight:700;color:var(--gold)">'+totalXP+'</div></div></div></div>';});list.innerHTML=html;}
+
+// Wire Life hub cards and back buttons
+document.querySelectorAll('.life-card:not(.life-soon)').forEach(function(card){card.addEventListener('click',function(){goNav(this.getAttribute('data-nav'));});});
+document.getElementById('symptoms-back').addEventListener('click',function(){goNav('life');});
+document.getElementById('hof-back').addEventListener('click',function(){goNav('life');});
 document.getElementById('gdrive-connect-btn').addEventListener('click',connectGDrive);
 initGDrive();
 </script>
