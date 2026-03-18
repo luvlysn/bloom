@@ -125,11 +125,16 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 .ht-xp{font-size:0.75rem;font-weight:700;color:var(--gold);flex-shrink:0;align-self:flex-start}.ht.done .ht-xp{color:var(--teal)}
 .ht-nm{font-size:0.9375rem;font-weight:700;color:var(--text);line-height:1.2;transition:all .2s}
 .ht.done .ht-nm{text-decoration:line-through;color:var(--text-dim)}.ht.lk .ht-nm{color:var(--text-dim)}
-.fc{margin:10px 16px 0;background:var(--rose-bg);border:1px solid var(--rose-dim);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.fc{margin:10px 16px 0;background:var(--rose-bg);border:1px solid var(--rose-dim);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:0;cursor:pointer;user-select:none;transition:background .2s,border-color .2s}
+.fc-row{display:flex;align-items:center;gap:12px}
+.fc.flare-on{background:rgba(224,112,112,.28);border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
 .fc:active{transform:scale(.98)}.fc-i{flex:1}.fc-t{font-size:0.9375rem;font-weight:700;color:var(--rose);margin-bottom:2px}.fc-d{font-size:0.75rem;color:rgba(224,112,112,.55)}
-.tog{width:42px;height:24px;border-radius:12px;background:rgba(224,112,112,.12);border:1.5px solid var(--rose-dim);position:relative;flex-shrink:0;transition:background .25s}
-.tog::after{content:'';width:16px;height:16px;background:rgba(224,112,112,.35);border-radius:50%;position:absolute;top:3px;left:3px;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
-.tog.on{background:rgba(224,112,112,.25)}.tog.on::after{left:21px;background:var(--rose)}
+.fc.flare-on .fc-d{color:var(--rose);font-weight:600}
+.tog{width:44px;height:26px;border-radius:13px;background:rgba(224,112,112,.15);border:1.5px solid var(--rose-dim);position:relative;flex-shrink:0;transition:background .25s,border-color .25s}
+.tog::after{content:'';width:18px;height:18px;background:rgba(224,112,112,.4);border-radius:50%;position:absolute;top:3px;left:3px;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+.tog.on{background:var(--rose);border-color:var(--rose)}.tog.on::after{left:21px;background:#fff}
+.flare-note{margin:6px 16px 0;width:calc(100% - 32px);background:var(--card);border:1px solid var(--rose-dim);border-radius:var(--r-sm);padding:10px 12px;font-size:0.875rem;color:var(--text);font-family:inherit;outline:none;resize:vertical;min-height:72px;color-scheme:var(--input-scheme)}
+.flare-note:focus{border-color:var(--rose)}
 .dv{height:1px;background:var(--border);margin:14px 16px 0}
 .ww{padding:0 16px;display:flex;gap:6px}
 .wc{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 3px 7px;text-align:center;transition:all .2s}
@@ -204,7 +209,7 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 .modal-input{background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-size:0.875rem;color:var(--text);font-family:inherit;outline:none;color-scheme:var(--input-scheme)}
 .modal-input:focus{border-color:var(--gold-dim)}
 .modal-row{display:flex;gap:8px}.modal-row>*{flex:1}
-.modal-btns{display:flex;gap:8px;margin-top:4px}
+.modal-btns{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
 .modal-btn{flex:1;padding:10px;border-radius:var(--r-sm);font-size:0.875rem;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid var(--border);text-align:center;transition:all .2s}
 .modal-btn:active{transform:scale(.97)}
 .modal-save{background:var(--gold-bg);border-color:var(--gold-dim);color:var(--gold)}
@@ -251,6 +256,40 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 .life-card-i{font-size:2rem;margin-bottom:8px}
 .life-card-n{font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:3px}
 .life-card-s{font-size:0.6875rem;color:var(--text-dim)}
+.rep-hm-row{display:flex;align-items:center;gap:4px;margin-bottom:4px}
+.rep-hm-name{font-size:0.625rem;color:var(--text-dim);width:100px;flex-shrink:0;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sym-table{width:100%;border-collapse:collapse;font-size:0.8125rem}
+.sym-th{text-align:left;font-size:0.5625rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);padding:6px 8px;border-bottom:1px solid var(--border)}
+.sym-td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.sym-row:last-child .sym-td{border-bottom:none}
+.sym-archived .sym-note-view{color:var(--text-dim);font-style:italic;opacity:.55}
+.sym-archived .sym-date-col{opacity:.55}
+.sym-date-col{width:72px;flex-shrink:0;color:var(--text-mid);font-weight:600;white-space:nowrap}
+.sym-note-col{min-width:0}
+.sym-tog-col{width:52px;text-align:center}
+.sym-del-col{width:32px;text-align:center}
+.sym-del-btn{background:none;border:none;color:var(--text-dim);font-size:1.125rem;cursor:pointer;padding:0 4px;line-height:1;font-family:inherit;transition:color .15s}
+.sym-del-btn:hover{color:var(--rose)}
+.sym-note-view{color:var(--text);line-height:1.5;cursor:pointer;min-height:20px;word-break:break-word}
+.sym-note-view:hover{color:var(--gold)}
+.sym-note-edit{width:100%;min-height:60px;resize:vertical}
+.sym-flare-dot{margin-left:4px;font-size:0.75rem}
+.sym-year-div{display:flex;align-items:center;gap:8px;padding:12px 16px 6px}
+.sym-year-label{font-size:0.625rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold)}
+.sym-tog{margin:0 auto}
+.rep-hm-name.phase-label{color:var(--gold);font-weight:700;font-size:0.5625rem;letter-spacing:.8px;text-transform:uppercase}
+.rep-hm-cells{display:flex;gap:2px}
+.rep-cell{width:16px;height:16px;border-radius:2px;flex-shrink:0;cursor:pointer;transition:opacity .15s;border:1px solid transparent}
+.rep-cell:hover{opacity:.7}
+.rep-cell.done{background:var(--teal)}
+.rep-cell.missed{background:var(--rose-dim)}
+.rep-cell.empty{background:var(--border)}
+.rep-cell.xp-0{background:var(--border)}
+.rep-cell.xp-1{background:#3D2A08;border-color:#5A3E10}
+.rep-cell.xp-2{background:#9A6415}
+.rep-cell.xp-3{background:#F5C842}
+.rep-dow-row{display:flex;gap:2px;margin-left:104px;margin-bottom:2px}
+.rep-dow{width:16px;font-size:0.5rem;color:var(--text-dim);text-align:center;flex-shrink:0}
 .life-soon{opacity:.45;cursor:default}.life-soon:active{transform:none;opacity:.45}
 @media(min-width:768px){.sidebar{display:flex;flex-direction:column}.main{margin-left:var(--sidebar-w)}.bn{display:none}.scroll{max-width:640px;padding:0 20px 40px}.hg{grid-template-columns:1fr 1fr 1fr}}
 </style>
@@ -266,12 +305,15 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <button class="sb-item" data-nav="calendar"><span class="sb-item-i">📅</span>Calendar</button>
 <button class="sb-item" data-nav="life"><span class="sb-item-i">🌱</span>Life</button>
 <button class="sb-item" data-nav="settings"><span class="sb-item-i">⚙️</span>Settings</button>
-<div class="sb-sec" style="margin-top:8px">Coming Soon</div>
-<button class="sb-item" data-nav="soon-meals"><span class="sb-item-i">🐟</span>Meals</button>
+<div class="sb-sec" style="margin-top:8px">Life</div>
+<button class="sb-item" data-nav="symptoms"><span class="sb-item-i">🩺</span>Symptoms</button>
+<button class="sb-item" data-nav="halloffame"><span class="sb-item-i">🏆</span>Hall of Fame</button>
+<button class="sb-item" data-nav="report"><span class="sb-item-i">📊</span>Report</button>
+<button class="sb-item" data-nav="rewards-manage"><span class="sb-item-i">🎁</span>Rewards</button>
+<button class="sb-item" data-nav="soon-meals"><span class="sb-item-i">🍽️</span>Meals</button>
 <button class="sb-item" data-nav="soon-cleaning"><span class="sb-item-i">🧹</span>Cleaning</button>
 <button class="sb-item" data-nav="soon-workouts"><span class="sb-item-i">💪</span>Workouts</button>
 <button class="sb-item" data-nav="soon-journal"><span class="sb-item-i">📓</span>Journal</button>
-<button class="sb-item" data-nav="soon-symptoms"><span class="sb-item-i">🩺</span>Symptoms</button>
 </div></div>
 <div class="main">
 <div class="page active" id="page-home"><div class="scroll">
@@ -282,7 +324,8 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <div class="prog a3"><div class="prog-top"><div><div class="prog-l">Today's Progress</div><div class="prog-n" id="prog-n">0 <span class="prog-ns">/ 6</span></div></div><div class="prog-p" id="prog-p">0%</div></div><div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div></div>
 <div class="sh a4" id="sec-habits"><div class="sh-t">Today's Habits</div><div class="sh-a" id="all-done"></div></div>
 <div id="habit-area"></div>
-<div class="fc a5" id="flare-card"><div class="fc-i"><div class="fc-t">⚡ Flare Day?</div><div class="fc-d" id="flare-desc">Switch to 3-habit survival mode</div></div><div class="tog" id="flare-tog"></div></div>
+<div class="fc a5" id="flare-card"><div class="fc-row"><div class="fc-i"><div class="fc-t">⚡ Flare Day?</div><div class="fc-d" id="flare-desc">Rest counts. Mark this day.</div></div><div class="tog" id="flare-tog"></div></div></div>
+<textarea id="flare-note-home" class="flare-note" placeholder="Note your symptoms or how you're feeling…" style="display:none"></textarea>
 <div id="home-tasks-wrap"></div>
 <div class="dv"></div>
 <div class="sh a5" id="sec-week"><div class="sh-t">This Week</div></div><div class="ww a5" id="week-strip"></div>
@@ -311,6 +354,8 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <button class="day-back" id="day-back">← Back to calendar</button>
 <div class="day-stat" id="day-stat"></div>
 <div class="sh" style="padding-top:6px"><div class="sh-t" style="font-size:0.875rem">Habits</div></div><div id="day-habits" class="hg"></div>
+<div class="fc" id="dv-flare-card" style="margin-top:12px"><div class="fc-row"><div class="fc-i"><div class="fc-t">⚡ Flare Day?</div><div class="fc-d" id="dv-flare-desc">Mark this as a flare day.</div></div><div class="tog" id="dv-flare-tog"></div></div></div>
+<textarea id="dv-flare-note" class="flare-note" placeholder="Note symptoms or how you felt…" style="display:none"></textarea>
 <div class="sh" style="padding-top:10px"><div class="sh-t" style="font-size:0.875rem">Tasks Completed</div></div><div id="day-tasks" class="task-list" style="padding-bottom:16px"></div>
 </div></div></div>
 <div class="page" id="page-xplog"><div class="scroll" style="padding-top:8px;position:relative">
@@ -321,7 +366,10 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <div class="page" id="page-settings"><div class="scroll" style="padding-top:8px">
 <div class="sh a1"><div class="sh-t">⚙️ Settings</div></div>
 <div class="sh a2" style="padding-top:4px"><div class="sh-t" style="font-size:0.875rem">Theme</div></div>
-<div class="ss a2"><div class="theme-row" id="theme-row"><button class="theme-opt" data-theme="midnight">🌙 Midnight</button><button class="theme-opt" data-theme="garden">🌿 Garden</button></div></div>
+<div class="ss a2"><div class="theme-row" id="theme-row">
+<button class="theme-opt" data-theme="midnight" style="background:#12111A;color:#D4A84B;border-color:#2E2D3E">🌙 Midnight</button>
+<button class="theme-opt" data-theme="garden" style="background:linear-gradient(135deg,#E6F0C2,#DDD0EC);color:#3D6610;border-color:rgba(140,160,100,.3)">🌿 Garden</button>
+</div></div>
 <div class="sh a2" style="padding-top:4px"><div class="sh-t" style="font-size:0.875rem">Font Size</div></div>
 <div class="ss a2"><div class="theme-row" id="font-row"><button class="theme-opt" data-fsize="small">A Small</button><button class="theme-opt" data-fsize="medium">A Medium</button><button class="theme-opt" data-fsize="large">A Large</button></div></div>
 <div class="sh a2" style="padding-top:4px"><div class="sh-t" style="font-size:0.875rem">Phase Management</div></div><div class="ss a2" id="phase-mgmt"></div>
@@ -335,6 +383,8 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <div style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
 <div class="life-card a2" data-nav="symptoms"><div class="life-card-i">🩺</div><div class="life-card-n">Symptoms</div><div class="life-card-s">Flare log</div></div>
 <div class="life-card a2" data-nav="halloffame"><div class="life-card-i">🏆</div><div class="life-card-n">Hall of Fame</div><div class="life-card-s">Graduated habits</div></div>
+<div class="life-card a2" data-nav="report"><div class="life-card-i">📊</div><div class="life-card-n">Report</div><div class="life-card-s">Monthly overview</div></div>
+<div class="life-card a2" data-nav="rewards-manage"><div class="life-card-i">🎁</div><div class="life-card-n">Rewards</div><div class="life-card-s">Manage vault</div></div>
 <div class="life-card a3 life-soon"><div class="life-card-i">🍽️</div><div class="life-card-n">Recipes</div><div class="life-card-s">Coming soon</div></div>
 <div class="life-card a3 life-soon"><div class="life-card-i">🩸</div><div class="life-card-n">Period Tracker</div><div class="life-card-s">Coming soon</div></div>
 <div class="life-card a4 life-soon"><div class="life-card-i">💪</div><div class="life-card-n">Workouts</div><div class="life-card-s">Coming soon</div></div>
@@ -345,6 +395,33 @@ html,body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text
 <button class="day-back" id="symptoms-back">← Back to Life</button>
 <div class="sh a1"><div class="sh-t">🩺 Symptoms</div></div>
 <div id="symptoms-list" style="padding:0 16px 16px"></div>
+</div></div>
+<div class="page" id="page-report"><div class="scroll" style="padding-top:8px">
+<button class="day-back" id="report-back">← Back to Life</button>
+<div class="sh a1" style="justify-content:space-between;align-items:center;padding-right:16px">
+  <div class="sh-t">📊 Report</div>
+  <select id="report-month-sel" class="modal-input" style="width:auto;padding:6px 10px;font-size:0.8125rem"></select>
+</div>
+<div class="sr a2" style="margin-top:4px;grid-template-columns:1fr 1fr 1fr 1fr">
+  <div class="st"><div class="st-l">Month XP</div><div class="st-v gold" id="rep-total-xp">0</div></div>
+  <div class="st"><div class="st-l">Best Day</div><div class="st-v teal" id="rep-best-day">—</div></div>
+  <div class="st"><div class="st-l">Top Habit</div><div id="rep-top-habit" style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-top:6px;line-height:1.3">—</div></div>
+  <div class="st"><div class="st-l">Least Habit</div><div id="rep-least-habit" style="font-size:0.75rem;font-weight:700;color:var(--rose);margin-top:6px;line-height:1.3">—</div></div>
+</div>
+<div class="sh a3" style="padding-top:4px"><div class="sh-t" style="font-size:0.875rem">XP per day</div></div>
+<div class="cc a3" style="padding:12px 14px 8px"><div style="position:relative;width:100%;height:100px"><canvas id="rep-chart"></canvas></div></div>
+<div class="sh a3" style="padding-top:12px"><div class="sh-t" style="font-size:0.875rem">Habit heatmap</div></div>
+<div class="ss a3" style="padding:12px;overflow-x:auto" id="rep-heatmap-wrap">
+  <div id="rep-heatmap"></div>
+</div>
+<div style="height:16px"></div>
+</div></div>
+<div class="page" id="page-rewards-manage"><div class="scroll" style="padding-top:8px">
+<button class="day-back" id="rewards-manage-back">← Back to Life</button>
+<div class="sh a1"><div class="sh-t">🎁 Rewards</div></div>
+<div class="sh a2" style="padding-top:0"><div class="sh-t" style="font-size:0.75rem;color:var(--text-dim);font-weight:400">Long press or double-click any reward to edit</div></div>
+<div id="rewards-manage-list" style="padding:0 16px 8px;display:flex;flex-direction:column;gap:8px"></div>
+<div style="padding:0 16px 16px"><div class="ht" style="min-height:52px;align-items:center;justify-content:center;border-style:dashed;opacity:.5;cursor:pointer" id="rewards-manage-add"><div class="ht-nm" style="color:var(--text-dim);font-size:0.8125rem;text-align:center">+ Add reward</div></div></div>
 </div></div>
 <div class="page" id="page-halloffame"><div class="scroll" style="padding-top:8px">
 <button class="day-back" id="hof-back">← Back to Life</button>
@@ -396,7 +473,7 @@ function getRetiredHabits(){return DATA.habitDefs.filter(function(h){return h.re
 function getRewards(){return DATA.rewardDefs;}
 function getXPEarned(){var t=0;Object.keys(DATA.xpLedger).forEach(function(d){DATA.xpLedger[d].entries.forEach(function(e){t+=e.amount;});});return t;}
 function getAllXP(){return getXPEarned();}
-function getXPSpent(){return DATA.rewardClaims.reduce(function(s,c){return s+c.amount;},0);}
+function getXPSpent(){return DATA.rewardClaims.filter(function(c){return !c.refunded;}).reduce(function(s,c){return s+c.amount;},0);}
 function getXPBalance(){return getXPEarned()-getXPSpent();}
 function getClaimCount(rid){return DATA.rewardClaims.filter(function(c){return c.rewardId===rid&&!c.refunded;}).length;}
 function getDayXP(d){var dl=DATA.xpLedger[d];return dl?dl.entries.reduce(function(s,e){return s+e.amount;},0):0;}
@@ -416,8 +493,8 @@ var toastTimer;function showToast(m){var e=document.getElementById('toast-el');e
 var currentNav='home',prevNav='home';
 function goNav(page){if(page.indexOf('soon-')===0){showToast(page.replace('soon-','').charAt(0).toUpperCase()+page.replace('soon-','').slice(1)+' — coming soon');return;}prevNav=currentNav;currentNav=page;document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});var t=document.getElementById('page-'+page);if(t)t.classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('act');});var sm=document.querySelector('.sb-item[data-nav="'+page+'"]');if(sm)sm.classList.add('act');document.querySelectorAll('.bn .ni').forEach(function(n){n.classList.remove('act');});var bm=document.querySelector('.bn .ni[data-nav="'+page+'"]');if(bm)bm.classList.add('act');
 // highlight Life in nav for sub-pages
-if(page==='symptoms'||page==='halloffame'){var lb=document.querySelector('.bn .ni[data-nav="life"]');if(lb)lb.classList.add('act');var slb=document.querySelector('.sb-item[data-nav="life"]');if(slb)slb.classList.add('act');}
-if(page==='settings')renderSettings();if(page==='tasks'){renderTasksTodo();renderTasksDone();}if(page==='calendar'){showCalView();renderCalendar();}if(page==='xplog'){xpLogShown=0;renderXPLog();}if(page==='symptoms')renderSymptoms();if(page==='halloffame')renderHallOfFame();window.scrollTo(0,0);}
+if(page==='symptoms'||page==='halloffame'||page==='report'||page==='rewards-manage'){var lb=document.querySelector('.bn .ni[data-nav="life"]');if(lb)lb.classList.add('act');var slb=document.querySelector('.sb-item[data-nav="life"]');if(slb)slb.classList.add('act');}
+if(page==='settings')renderSettings();if(page==='tasks'){renderTasksTodo();renderTasksDone();}if(page==='calendar'){showCalView();renderCalendar();}if(page==='xplog'){xpLogShown=0;renderXPLog();}if(page==='symptoms')renderSymptoms();if(page==='halloffame')renderHallOfFame();if(page==='report'){buildMonthOptions();renderReport();}if(page==='home')renderFlareHome();if(page==='rewards-manage')renderRewardsPage();window.scrollTo(0,0);}
 document.querySelectorAll('[data-nav]').forEach(function(el){el.addEventListener('click',function(){goNav(this.getAttribute('data-nav'));});});
 function jumpTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 document.getElementById('xp-badge').addEventListener('click',function(){goNav('xplog');});
@@ -443,16 +520,32 @@ area.innerHTML=html;
 area.querySelectorAll('.ht:not([data-addphase])').forEach(function(tile){var hid=tile.getAttribute('data-hid');if(!hid)return;tile.addEventListener('click',function(){tapHabit(hid,getToday());});var pt;tile.addEventListener('touchstart',function(){pt=setTimeout(function(){editHabit(hid);},600);},{passive:true});tile.addEventListener('touchend',function(){clearTimeout(pt);});tile.addEventListener('touchmove',function(){clearTimeout(pt);});tile.addEventListener('dblclick',function(){editHabit(hid);});});
 area.querySelectorAll('[data-addphase]').forEach(function(btn){btn.addEventListener('click',function(){addHabit(parseInt(this.getAttribute('data-addphase')));});});}
 
-function tapHabit(id,dateStr){if(!DATA.habits[dateStr])DATA.habits[dateStr]={};if(!DATA.xpLedger[dateStr])DATA.xpLedger[dateStr]={entries:[]};
-var h=getHabit(id);var was=DATA.habits[dateStr][id]&&DATA.habits[dateStr][id].done;
-if(was){DATA.habits[dateStr][id]={done:false,ts:null};DATA.xpLedger[dateStr].entries=DATA.xpLedger[dateStr].entries.filter(function(e){return e.id!==id;});}
-else{var ts=new Date().toISOString();DATA.habits[dateStr][id]={done:true,ts:ts};DATA.xpLedger[dateStr].entries.push({source:'habit',id:id,amount:h.xp,ts:ts});if(dateStr===getToday()){var pool=TOAST_MSGS[id]||[h.name+' done!'];showToast(pick(pool)+' +'+h.xp+' XP');}}
-var tile=document.getElementById('tile-'+id);if(tile){tile.classList.add('pop');setTimeout(function(){tile.classList.remove('pop');},250);}
-updateStreaks();saveState();if(dateStr===getToday()){renderHabits();renderHomeTasks();updateUI();}else{renderDayView(dateStr);renderCalendar();}}
+function tapHabit(id,dateStr){
+  if(!DATA.habits[dateStr])DATA.habits[dateStr]={};
+  if(!DATA.xpLedger[dateStr])DATA.xpLedger[dateStr]={entries:[]};
+  var h=getHabit(id);if(!h)return;
+  var was=DATA.habits[dateStr][id]&&DATA.habits[dateStr][id].done;
+  if(was){DATA.habits[dateStr][id]={done:false,ts:null};DATA.xpLedger[dateStr].entries=DATA.xpLedger[dateStr].entries.filter(function(e){return e.id!==id;});}
+  else{var ts=new Date().toISOString();DATA.habits[dateStr][id]={done:true,ts:ts};DATA.xpLedger[dateStr].entries.push({source:'habit',id:id,amount:h.xp,ts:ts});if(dateStr===getToday()){var pool=TOAST_MSGS[id]||[h.name+' done!'];showToast(pick(pool)+' +'+h.xp+' XP');}}
+  var tile=document.getElementById('tile-'+id);if(tile){tile.classList.add('pop');setTimeout(function(){tile.classList.remove('pop');},250);}
+  updateStreaks();saveState();
+  if(dateStr===getToday()){renderHabits();renderHomeTasks();updateUI();}
+  else{renderDayView(dateStr);renderCalendar();}
+}
 
 function editHabit(id){var h=getHabit(id);if(!h)return;
-var body='<div class="modal-field"><div class="modal-label">Name</div><input class="modal-input" id="mh-name" value="'+h.name+'"></div><div class="modal-row"><div class="modal-field"><div class="modal-label">Time</div><input class="modal-input" id="mh-time" value="'+h.time+'"></div><div class="modal-field"><div class="modal-label">XP</div><input class="modal-input" id="mh-xp" type="number" value="'+h.xp+'"></div></div><div class="modal-row"><div class="modal-field"><div class="modal-label">Tag</div><select class="modal-input" id="mh-tag"><option value="core"'+(h.tag==='core'?' selected':'')+'>Core</option><option value="mcas"'+(h.tag==='mcas'?' selected':'')+'>MCAS-safe</option></select></div><div class="modal-field"><div class="modal-label">Phase</div><select class="modal-input" id="mh-phase"><option value="0"'+(h.phase===0?' selected':'')+'>Phase 0</option><option value="1"'+(h.phase===1?' selected':'')+'>Phase 1</option><option value="2"'+(h.phase===2?' selected':'')+'>Phase 2</option></select></div></div>';
-openModal('Edit Habit',body,[{id:'mh-save',label:'Save',cls:'modal-save',fn:function(){var def=DATA.habitDefs.find(function(x){return x.id===id;});if(def){def.name=document.getElementById('mh-name').value.trim()||def.name;def.time=document.getElementById('mh-time').value.trim()||def.time;def.xp=parseInt(document.getElementById('mh-xp').value)||def.xp;def.tag=document.getElementById('mh-tag').value;def.phase=parseInt(document.getElementById('mh-phase').value);}saveState();closeModal();renderHabits();updateUI();showToast('Habit updated');}},{id:'mh-del',label:'Delete',cls:'modal-delete',fn:function(){if(confirm('Delete "'+h.name+'"? This cannot be undone.')){DATA.habitDefs=DATA.habitDefs.filter(function(x){return x.id!==id;});saveState();closeModal();renderHabits();updateUI();showToast('Habit deleted');}}},{id:'mh-cancel',label:'Cancel',cls:'modal-cancel',fn:closeModal}]);}
+var body='<div class="modal-field"><div class="modal-label">Name</div><input class="modal-input" id="mh-name" value="'+h.name+'"></div><div class="modal-row"><div class="modal-field"><div class="modal-label">Time</div><input class="modal-input" id="mh-time" value="'+h.time+'"></div><div class="modal-field"><div class="modal-label">XP</div><input class="modal-input" id="mh-xp" type="number" value="'+h.xp+'"></div></div><div class="modal-row"><div class="modal-field"><div class="modal-label">Tag</div><select class="modal-input" id="mh-tag"><option value="core"'+(h.tag==='core'?' selected':'')+'>Core</option><option value="mcas"'+(h.tag==='mcas'?' selected':'')+'>MCAS-safe</option></select></div><div class="modal-field"><div class="modal-label">Phase</div><select class="modal-input" id="mh-phase"><option value="0"'+(h.phase===0?' selected':'')+'>Daily Essentials</option><option value="1"'+(h.phase===1?' selected':'')+'>Phase 1</option><option value="2"'+(h.phase===2?' selected':'')+'>Phase 2</option></select></div></div>';
+openModal('Edit Habit',body,[
+{id:'mh-save',label:'Save',cls:'modal-save',fn:function(){var def=DATA.habitDefs.find(function(x){return x.id===id;});if(def){def.name=document.getElementById('mh-name').value.trim()||def.name;def.time=document.getElementById('mh-time').value.trim()||def.time;def.xp=parseInt(document.getElementById('mh-xp').value)||def.xp;def.tag=document.getElementById('mh-tag').value;def.phase=parseInt(document.getElementById('mh-phase').value);}saveState();closeModal();renderHabits();updateUI();showToast('Habit updated');}},
+{id:'mh-ret',label:'Retire 🎓',cls:'modal-cancel',fn:function(){
+  var activeInPhase=DATA.habitDefs.filter(function(x){return x.phase===h.phase&&!x.retired;});
+  if(activeInPhase.length<=1&&h.phase===0){showToast('Can\'t retire the last Daily Essential.');return;}
+  var def=DATA.habitDefs.find(function(x){return x.id===id;});
+  if(def){def.retired=true;def.retiredDate=getToday();}
+  saveState();closeModal();renderHabits();updateUI();showToast(h.name+' graduated 🎓');
+}},
+{id:'mh-del',label:'Delete',cls:'modal-delete',fn:function(){if(confirm('Delete "'+h.name+'"? This cannot be undone.')){DATA.habitDefs=DATA.habitDefs.filter(function(x){return x.id!==id;});saveState();closeModal();renderHabits();updateUI();showToast('Habit deleted');}}},
+{id:'mh-cancel',label:'Cancel',cls:'modal-cancel',fn:closeModal}]);}
 
 function addHabit(phase){
 var body='<div class="modal-field"><div class="modal-label">Name</div><input class="modal-input" id="ah-name" placeholder="e.g. Morning Walk"></div><div class="modal-row"><div class="modal-field"><div class="modal-label">Time</div><input class="modal-input" id="ah-time" placeholder="e.g. 8am"></div><div class="modal-field"><div class="modal-label">XP</div><input class="modal-input" id="ah-xp" type="number" value="10"></div></div><div class="modal-field"><div class="modal-label">Tag</div><select class="modal-input" id="ah-tag"><option value="core">Core</option><option value="mcas">MCAS-safe</option></select></div>';
@@ -467,7 +560,26 @@ if(t.completedAt){var cD=t.completedDate||t.completedAt.slice(0,10);if(DATA.xpLe
 else{t.completedAt=new Date().toISOString();t.completedDate=today;DATA.xpLedger[today].entries.push({source:'task',id:tid,amount:t.xp,ts:t.completedAt});showToast('Task done! +'+t.xp+' XP ✓');}
 updateStreaks();saveState();renderTasksTodo();renderTasksDone();renderHomeTasks();updateUI();}
 
-function editTask(tid){var t=DATA.tasks.find(function(x){return x.id===tid;});if(!t)return;var body='<div class="modal-field"><div class="modal-label">Name</div><input class="modal-input" id="mt-name" value="'+t.name+'"></div><div class="modal-row"><div class="modal-field"><div class="modal-label">XP</div><select class="modal-input" id="mt-xp"><option value="5"'+(t.xp===5?' selected':'')+'>5</option><option value="10"'+(t.xp===10?' selected':'')+'>10</option><option value="20"'+(t.xp===20?' selected':'')+'>20</option><option value="50"'+(t.xp===50?' selected':'')+'>50</option><option value="100"'+(t.xp===100?' selected':'')+'>100</option></select></div><div class="modal-field"><div class="modal-label">Due date</div><input class="modal-input" id="mt-due" type="date" value="'+(t.due||'')+'"></div></div><div style="font-size:0.625rem;color:var(--text-dim);margin-top:4px">Created: '+new Date(t.createdAt).toLocaleDateString()+(t.completedAt?' · Done: '+new Date(t.completedAt).toLocaleDateString():'')+'</div>';openModal('Edit Task',body,[{id:'mt-save',label:'Save',cls:'modal-save',fn:function(){t.name=document.getElementById('mt-name').value.trim()||t.name;var nx=parseInt(document.getElementById('mt-xp').value);if(t.completedAt&&nx!==t.xp){var cD=t.completedAt.slice(0,10);if(DATA.xpLedger[cD]){var en=DATA.xpLedger[cD].entries.find(function(e){return e.id===tid;});if(en)en.amount=nx;}}t.xp=nx;t.due=document.getElementById('mt-due').value||null;saveState();closeModal();renderTasksTodo();renderTasksDone();renderHomeTasks();updateUI();showToast('Task updated');}},{id:'mt-del',label:'Delete',cls:'modal-delete',fn:function(){if(t.completedAt){var cD=t.completedAt.slice(0,10);if(DATA.xpLedger[cD])DATA.xpLedger[cD].entries=DATA.xpLedger[cD].entries.filter(function(e){return e.id!==tid;});}DATA.tasks=DATA.tasks.filter(function(x){return x.id!==tid;});saveState();closeModal();renderTasksTodo();renderTasksDone();renderHomeTasks();updateUI();showToast('Task deleted');}},{id:'mt-cancel',label:'Cancel',cls:'modal-cancel',fn:closeModal}]);}
+function editTask(tid){var t=DATA.tasks.find(function(x){return x.id===tid;});if(!t)return;
+var completedDateVal=t.completedDate||(t.completedAt?t.completedAt.slice(0,10):'');
+var body='<div class="modal-field"><div class="modal-label">Name</div><input class="modal-input" id="mt-name" value="'+t.name+'"></div>';
+body+='<div class="modal-row"><div class="modal-field"><div class="modal-label">XP</div><select class="modal-input" id="mt-xp"><option value="5"'+(t.xp===5?' selected':'')+'>5</option><option value="10"'+(t.xp===10?' selected':'')+'>10</option><option value="20"'+(t.xp===20?' selected':'')+'>20</option><option value="50"'+(t.xp===50?' selected':'')+'>50</option><option value="100"'+(t.xp===100?' selected':'')+'>100</option></select></div>';
+body+='<div class="modal-field"><div class="modal-label">Due date</div><input class="modal-input" id="mt-due" type="date" value="'+(t.due||'')+'"></div></div>';
+if(t.completedAt){body+='<div class="modal-field"><div class="modal-label">Completed date</div><input class="modal-input" id="mt-cdate" type="date" value="'+completedDateVal+'"></div>';}
+body+='<div style="font-size:0.625rem;color:var(--text-dim);margin-top:4px">Created: '+new Date(t.createdAt).toLocaleDateString()+(t.completedAt?' · Done: '+new Date(t.completedAt).toLocaleDateString():'')+'</div>';
+openModal('Edit Task',body,[
+{id:'mt-save',label:'Save',cls:'modal-save',fn:function(){
+  t.name=document.getElementById('mt-name').value.trim()||t.name;
+  var nx=parseInt(document.getElementById('mt-xp').value);
+  // If XP changed on a completed task, update ledger
+  if(t.completedAt&&nx!==t.xp){var oldD=t.completedDate||t.completedAt.slice(0,10);if(DATA.xpLedger[oldD]){var en=DATA.xpLedger[oldD].entries.find(function(e){return e.id===tid;});if(en)en.amount=nx;}}
+  t.xp=nx;
+  t.due=document.getElementById('mt-due').value||null;
+  // If completed date changed, move XP ledger entry
+  if(t.completedAt){var newCDate=document.getElementById('mt-cdate').value;if(newCDate&&newCDate!==completedDateVal){var oldD2=t.completedDate||t.completedAt.slice(0,10);if(DATA.xpLedger[oldD2]){var entry=DATA.xpLedger[oldD2].entries.find(function(e){return e.id===tid;});if(entry){DATA.xpLedger[oldD2].entries=DATA.xpLedger[oldD2].entries.filter(function(e){return e.id!==tid;});if(!DATA.xpLedger[newCDate])DATA.xpLedger[newCDate]={entries:[]};DATA.xpLedger[newCDate].entries.push(entry);}}t.completedDate=newCDate;}}
+  saveState();closeModal();renderTasksTodo();renderTasksDone();renderHomeTasks();updateUI();showToast('Task updated');}},
+{id:'mt-del',label:'Delete',cls:'modal-delete',fn:function(){if(t.completedAt){var cD=t.completedDate||t.completedAt.slice(0,10);if(DATA.xpLedger[cD])DATA.xpLedger[cD].entries=DATA.xpLedger[cD].entries.filter(function(e){return e.id!==tid;});}DATA.tasks=DATA.tasks.filter(function(x){return x.id!==tid;});saveState();closeModal();renderTasksTodo();renderTasksDone();renderHomeTasks();updateUI();showToast('Task deleted');}},
+{id:'mt-cancel',label:'Cancel',cls:'modal-cancel',fn:closeModal}]);}
 
 function wireTask(el,t){el.addEventListener('click',function(e){tapTask(t.id);});var pt;el.addEventListener('touchstart',function(){pt=setTimeout(function(){editTask(t.id);},600);},{passive:true});el.addEventListener('touchend',function(){clearTimeout(pt);});el.addEventListener('touchmove',function(){clearTimeout(pt);});el.addEventListener('dblclick',function(){editTask(t.id);});}
 function makeTaskEl(t){var isDone=!!t.completedAt;var today=getToday();var isOver=!isDone&&t.due&&t.due<today;var el=document.createElement('div');el.className='task-item'+(isDone?' t-done':'')+(isOver?' t-overdue':'');var dueTxt='';if(t.due){var dd=new Date(t.due+'T00:00:00');dueTxt='<span class="task-due'+(isOver?' overdue':'')+'">Due '+dd.toLocaleDateString('en-US',{month:'short',day:'numeric'})+(isOver?' ⚠️':'')+'</span>';}el.innerHTML='<div class="ht-ck">'+checkSvg+'</div><div class="task-info"><div class="task-name">'+t.name+'</div><div class="task-meta">'+dueTxt+'<span>'+(DIFF_LABELS[String(t.xp)]||t.xp+' XP')+'</span></div></div><div class="task-xp">+'+t.xp+'</div>';wireTask(el,t);return el;}
@@ -551,7 +663,41 @@ if(milestone>0&&DATA.streakMilestonesAwarded.indexOf(milestone)<0){
 }
 }
 
-document.getElementById('flare-card').addEventListener('click',function(){DATA.settings.flareMode=!DATA.settings.flareMode;document.getElementById('flare-tog').classList.toggle('on',DATA.settings.flareMode);document.getElementById('flare-desc').textContent=DATA.settings.flareMode?'On — 3 habits only. Rest counts today.':'Switch to 3-habit survival mode';if(DATA.settings.flareMode)showToast('⚡ Flare mode. Just 3 things today.');saveState();});
+// FLARE DAY - per day, home page
+function getFlareToday(){var today=getToday();return DATA.habits[today]&&DATA.habits[today].flare===true;}
+function renderFlareHome(){
+  var on=getFlareToday();
+  var today=getToday();
+  var card=document.getElementById('flare-card');
+  var tog=document.getElementById('flare-tog');
+  var desc=document.getElementById('flare-desc');
+  var note=document.getElementById('flare-note-home');
+  tog.classList.toggle('on',on);
+  card.classList.toggle('flare-on',on);
+  desc.textContent=on?'On — rest counts today.':'Rest counts. Mark this day.';
+  note.style.display=on?'block':'none';
+  // Always sync note value from DATA so edits from Symptoms/DayView are reflected
+  var storedNote=(DATA.habits[today]&&DATA.habits[today].flareNote)||'';
+  if(note.value!==storedNote)note.value=storedNote;
+}
+document.getElementById('flare-card').addEventListener('click',function(){
+  var today=getToday();
+  if(!DATA.habits[today])DATA.habits[today]={};
+  var on=!DATA.habits[today].flare;
+  DATA.habits[today].flare=on;
+  // Never clear flareNote on toggle — preserve data, just show/hide textarea
+  renderFlareHome();
+  if(on)showToast('⚡ Flare day marked.');
+  saveState();
+});
+var flareNoteTimer;
+document.getElementById('flare-note-home').addEventListener('input',function(){
+  var today=getToday();
+  if(!DATA.habits[today])DATA.habits[today]={};
+  DATA.habits[today].flareNote=this.value;
+  clearTimeout(flareNoteTimer);
+  flareNoteTimer=setTimeout(function(){saveState();},800);
+});
 
 function renderXPLog(){var list=document.getElementById('xp-log-list');if(xpLogShown===0)list.innerHTML='';
 // Build unified list: earnings + claims + refunds
@@ -585,7 +731,7 @@ if(end<all.length){var more=document.createElement('div');more.className='xp-loa
 function updateUI(){var today=getToday();var todayH=DATA.habits[today]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0;});var totalA=active.length;var doneC=active.filter(function(h){return todayH[h.id]&&todayH[h.id].done;}).length;var xpTd=active.reduce(function(s,h){return s+(todayH[h.id]&&todayH[h.id].done?h.xp:0);},0);var maxXP=active.reduce(function(s,h){return s+h.xp;},0);var taskXpTd=0;DATA.tasks.forEach(function(t){var cDate=t.completedDate||(t.completedAt?t.completedAt.slice(0,10):null);if(cDate===today)taskXpTd+=t.xp;});xpTd+=taskXpTd;var allXP=getAllXP();var pct=totalA>0?Math.round(doneC/totalA*100):0;
 document.getElementById('xp-today').textContent=xpTd;document.getElementById('xp-today-max').textContent='of '+maxXP+' + tasks';document.getElementById('total-xp-badge').textContent=allXP+' Total XP';document.getElementById('alltime-xp').textContent=allXP;document.getElementById('streak-val').textContent=DATA.streaks.current;document.getElementById('streak-sub').textContent=DATA.streaks.current===0?'🌱 Starting':DATA.streaks.current===1?'🌱 Day one':'🔥 '+DATA.streaks.current+' days';
 var wb='🌱',ws='Starting';if(doneC>=totalA&&totalA>0){wb='🏆';ws='Perfect day';}else if(doneC>=6){wb='🥇';ws='Strong day';}else if(doneC>=3){wb='🥈';ws='Solid day';}else if(doneC>=1){wb='🥉';ws='Showed up';}
-document.getElementById('week-badge').textContent=wb;document.getElementById('week-badge-sub').textContent=ws;document.getElementById('prog-n').innerHTML=doneC+' <span class="prog-ns">/ '+totalA+'</span>';document.getElementById('prog-p').textContent=pct+'%';document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('all-done').textContent=doneC>=totalA&&totalA>0?'✦ All done!':'';document.getElementById('flare-tog').classList.toggle('on',DATA.settings.flareMode);
+document.getElementById('week-badge').textContent=wb;document.getElementById('week-badge-sub').textContent=ws;document.getElementById('prog-n').innerHTML=doneC+' <span class="prog-ns">/ '+totalA+'</span>';document.getElementById('prog-p').textContent=pct+'%';document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('all-done').textContent=doneC>=totalA&&totalA>0?'✦ All done!':'';renderFlareHome();
 var nr=getRewards().find(function(r){return r.type==='xp'&&r.cost>allXP;});document.getElementById('next-reward').textContent=nr?'Next reward: '+nr.cost+' XP '+nr.emoji:'All rewards unlocked! 🎉';renderRewards(allXP);renderChart(maxXP);renderWeek();}
 
 function renderWeek(){var now=new Date(),dow=now.getDay(),off=dow===0?-6:1-dow;var mon=new Date(now);mon.setDate(now.getDate()+off);var labels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];var today=getToday();var html='';labels.forEach(function(l,i){var d=new Date(mon);d.setDate(mon.getDate()+i);var dateStr=dstr(d);var isToday=dateStr===today;var cls='wc';if(isToday)cls+=' td';else if(getDayXP(dateStr)>0)cls+=' pa';html+='<div class="'+cls+'"><div class="wdn">'+l+'</div><div class="wnm">'+d.getDate()+'</div><div class="wp"></div></div>';});document.getElementById('week-strip').innerHTML=html;}
@@ -632,7 +778,7 @@ body+='<div class="modal-field"><div class="modal-label">Name</div><input class=
 body+='<div class="modal-row"><div class="modal-field"><div class="modal-label">XP Cost</div><input class="modal-input" id="mr-cost" type="number" value="'+(r.cost||0)+'"></div>';
 body+='<div class="modal-field"><div class="modal-label">Type</div><select class="modal-input" id="mr-type"><option value="xp"'+(r.type==='xp'?' selected':'')+'>XP threshold</option><option value="goal"'+(r.type==='goal'?' selected':'')+'>Goal</option></select></div></div>';
 body+='<div class="modal-field"><div class="modal-label">Supply</div><select class="modal-input" id="mr-supply"><option value="repeatable"'+(r.supply==='repeatable'?' selected':'')+'>Repeatable</option><option value="onetime"'+(r.supply==='onetime'?' selected':'')+'>One-time</option></select></div>';
-openModal('Edit Reward',body,[{id:'mr-s',label:'Save',cls:'modal-save',fn:function(){r.emoji=document.getElementById('mr-emoji').value.trim()||r.emoji;r.name=document.getElementById('mr-name').value.trim()||r.name;r.type=document.getElementById('mr-type').value;r.cost=r.type==='xp'?parseInt(document.getElementById('mr-cost').value)||0:null;r.supply=document.getElementById('mr-supply').value;saveState();closeModal();updateUI();showToast('Reward updated');}},{id:'mr-d',label:'Delete',cls:'modal-delete',fn:function(){DATA.rewardDefs=DATA.rewardDefs.filter(function(x){return x.id!==rid;});saveState();closeModal();updateUI();showToast('Reward deleted');}},{id:'mr-c',label:'Cancel',cls:'modal-cancel',fn:closeModal}]);}
+openModal('Edit Reward',body,[{id:'mr-s',label:'Save',cls:'modal-save',fn:function(){r.emoji=document.getElementById('mr-emoji').value.trim()||r.emoji;r.name=document.getElementById('mr-name').value.trim()||r.name;r.type=document.getElementById('mr-type').value;r.cost=r.type==='xp'?parseInt(document.getElementById('mr-cost').value)||0:null;r.supply=document.getElementById('mr-supply').value;saveState();closeModal();updateUI();if(document.getElementById('page-rewards-manage').classList.contains('active'))renderRewardsPage();showToast('Reward updated');}},{id:'mr-d',label:'Delete',cls:'modal-delete',fn:function(){DATA.rewardDefs=DATA.rewardDefs.filter(function(x){return x.id!==rid;});saveState();closeModal();updateUI();if(document.getElementById('page-rewards-manage').classList.contains('active'))renderRewardsPage();showToast('Reward deleted');}},{id:'mr-c',label:'Cancel',cls:'modal-cancel',fn:closeModal}]);}
 
 function addReward(){
 var body='<div class="modal-field"><div class="modal-label">Emoji</div><input class="modal-input" id="ar-emoji" value="🎁" maxlength="4"></div>';
@@ -651,9 +797,43 @@ document.getElementById('day-back').addEventListener('click',function(){showCalV
 document.getElementById('day-prev').addEventListener('click',function(){var d=parseD(dayViewDate);d.setDate(d.getDate()-1);dayViewDate=dstr(d);renderDayView(dayViewDate);});
 document.getElementById('day-next').addEventListener('click',function(){var d=parseD(dayViewDate);d.setDate(d.getDate()+1);dayViewDate=dstr(d);renderDayView(dayViewDate);});
 function renderCalendar(){var months=['January','February','March','April','May','June','July','August','September','October','November','December'];document.getElementById('cal-month').textContent=months[calMonth]+' '+calYear;var grid=document.getElementById('cal-grid');grid.innerHTML='';['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(d){grid.innerHTML+='<div class="cal-dow">'+d+'</div>';});var first=new Date(calYear,calMonth,1);var startDay=first.getDay()||7;var daysInMonth=new Date(calYear,calMonth+1,0).getDate();var today=getToday();for(var i=1;i<startDay;i++){grid.innerHTML+='<div class="cal-day empty"></div>';}for(var d=1;d<=daysInMonth;d++){var dateStr=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');var isToday=dateStr===today;var hasData=getDayXP(dateStr)>0;var el=document.createElement('div');el.className='cal-day'+(isToday?' today':'')+(hasData?' has-data':'');el.setAttribute('data-date',dateStr);el.innerHTML=d+'<div class="cal-pip"></div>';el.addEventListener('click',function(){dayViewDate=this.getAttribute('data-date');showDayView();renderDayView(dayViewDate);});grid.appendChild(el);}}
-function renderDayView(dateStr){var d=parseD(dateStr);var today=getToday();var isToday=dateStr===today;document.getElementById('day-title').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});document.getElementById('day-sub').textContent=isToday?'Today':d.toLocaleDateString('en-US',{year:'numeric'});var dayXP=getDayXP(dateStr);var dh=DATA.habits[dateStr]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0&&!h.retired;});var habitsDone=active.filter(function(h){return dh[h.id]&&dh[h.id].done;}).length;document.getElementById('day-stat').innerHTML='<div><div class="st-l">XP</div><div class="st-v gold" style="font-size:1.375rem">'+dayXP+'</div></div><div><div class="st-l">Habits</div><div class="st-v teal" style="font-size:1.375rem">'+habitsDone+'/'+active.length+'</div></div>';var hArea=document.getElementById('day-habits');hArea.innerHTML='';active.forEach(function(h){var done=dh[h.id]&&dh[h.id].done;var pc=h.phase===0?'pg':h.phase===1?'pt2':'pl';var el=document.createElement('div');el.className='ht '+pc+(done?' done':'');el.innerHTML='<div class="ht-top"><div class="ht-ck">'+checkSvg+'</div><div class="ht-mg"><div class="ht-tm">'+h.time+'</div><div class="ht-tg '+(h.tag==='core'?'tg-c':'tg-m')+'">'+(h.tag==='core'?'Core':'MCAS-safe')+'</div></div><div class="ht-xp">+'+h.xp+'</div></div><div class="ht-nm">'+h.name+'</div>';el.addEventListener('click',function(){tapHabit(h.id,dateStr);});hArea.appendChild(el);});var tArea=document.getElementById('day-tasks');tArea.innerHTML='';var dayTasks=DATA.tasks.filter(function(t){var cDate=t.completedDate||(t.completedAt?t.completedAt.slice(0,10):null);return cDate===dateStr;});if(!dayTasks.length){tArea.innerHTML='<div class="task-empty">No tasks completed</div>';return;}dayTasks.forEach(function(t){var el=document.createElement('div');el.className='task-item t-done';el.innerHTML='<div class="ht-ck">'+checkSvg+'</div><div class="task-info"><div class="task-name">'+t.name+'</div><div class="task-meta"><span>+'+t.xp+' XP</span></div></div>';tArea.appendChild(el);});}
+function renderDayView(dateStr){var d=parseD(dateStr);var today=getToday();var isToday=dateStr===today;document.getElementById('day-title').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});document.getElementById('day-sub').textContent=isToday?'Today':d.toLocaleDateString('en-US',{year:'numeric'});var dayXP=getDayXP(dateStr);var dh=DATA.habits[dateStr]||{};var habits=getAllHabits();var active=habits.filter(function(h){return DATA.settings.phasesUnlocked.indexOf(h.phase)>=0&&!h.retired;});var habitsDone=active.filter(function(h){return dh[h.id]&&dh[h.id].done;}).length;document.getElementById('day-stat').innerHTML='<div><div class="st-l">XP</div><div class="st-v gold" style="font-size:1.375rem">'+dayXP+'</div></div><div><div class="st-l">Habits</div><div class="st-v teal" style="font-size:1.375rem">'+habitsDone+'/'+active.length+'</div></div>';var hArea=document.getElementById('day-habits');hArea.innerHTML='';active.forEach(function(h){var done=dh[h.id]&&dh[h.id].done;var pc=h.phase===0?'pg':h.phase===1?'pt2':'pl';var el=document.createElement('div');el.className='ht '+pc+(done?' done':'');el.innerHTML='<div class="ht-top"><div class="ht-ck">'+checkSvg+'</div><div class="ht-mg"><div class="ht-tm">'+h.time+'</div><div class="ht-tg '+(h.tag==='core'?'tg-c':'tg-m')+'">'+(h.tag==='core'?'Core':'MCAS-safe')+'</div></div><div class="ht-xp">+'+h.xp+'</div></div><div class="ht-nm">'+h.name+'</div>';el.addEventListener('click',function(){tapHabit(h.id,dateStr);});hArea.appendChild(el);});var tArea=document.getElementById('day-tasks');tArea.innerHTML='';
+// Flare toggle for this day
+var dvFlareCard=document.getElementById('dv-flare-card');
+var dvFlareTog=document.getElementById('dv-flare-tog');
+var dvFlareDesc=document.getElementById('dv-flare-desc');
+var dvFlareNote=document.getElementById('dv-flare-note');
+var dayFlareOn=dh.flare===true;
+dvFlareTog.classList.toggle('on',dayFlareOn);
+dvFlareCard.classList.toggle('flare-on',dayFlareOn);
+dvFlareDesc.textContent=dayFlareOn?'On — flare day marked.':'Mark this as a flare day.';
+dvFlareNote.style.display=dayFlareOn?'block':'none';
+dvFlareNote.value=dh.flareNote||'';
+// Clone to remove old listeners
+var newCard=dvFlareCard.cloneNode(true);dvFlareCard.parentNode.replaceChild(newCard,dvFlareCard);
+var newNote=dvFlareNote.cloneNode(true);dvFlareNote.parentNode.replaceChild(newNote,dvFlareNote);
+document.getElementById('dv-flare-card').addEventListener('click',function(){
+  if(!DATA.habits[dateStr])DATA.habits[dateStr]={};
+  var on=!DATA.habits[dateStr].flare;
+  DATA.habits[dateStr].flare=on;
+  // Never clear flareNote on toggle — preserve data
+  renderDayView(dateStr);saveState();
+  if(on)showToast('⚡ Flare day marked.');
+});
+var dvNoteTimer;
+document.getElementById('dv-flare-note').addEventListener('input',function(){
+  if(!DATA.habits[dateStr])DATA.habits[dateStr]={};
+  DATA.habits[dateStr].flareNote=this.value;
+  clearTimeout(dvNoteTimer);dvNoteTimer=setTimeout(function(){saveState();},800);
+});
+var dayTasks=DATA.tasks.filter(function(t){var cDate=t.completedDate||(t.completedAt?t.completedAt.slice(0,10):null);return cDate===dateStr;});if(!dayTasks.length){tArea.innerHTML='<div class="task-empty">No tasks completed</div>';return;}dayTasks.forEach(function(t){var el=document.createElement('div');el.className='task-item t-done';el.innerHTML='<div class="ht-ck">'+checkSvg+'</div><div class="task-info"><div class="task-name">'+t.name+'</div><div class="task-meta"><span>+'+t.xp+' XP</span></div></div>';tArea.appendChild(el);});}
 
-function renderSettings(){var html='';PHASES.forEach(function(p){var ul=DATA.settings.phasesUnlocked.indexOf(p.id)>=0;html+='<div class="ss-r"><div><div style="font-size:0.875rem;font-weight:600">'+p.name+' · '+p.sub+'</div><div style="font-size:0.6875rem;color:var(--text-dim)">Unlocks week '+p.week+'</div></div>';if(p.id===0)html+='<div style="font-size:0.6875rem;color:var(--teal);font-weight:600">Always active</div>';else html+='<button class="btn-p'+(ul?' on':'')+'" data-phase="'+p.id+'">'+(ul?'✓ Active':'Unlock')+'</button>';html+='</div>';});document.getElementById('phase-mgmt').innerHTML=html;document.querySelectorAll('[data-phase]').forEach(function(b){b.addEventListener('click',function(){togglePhase(parseInt(this.getAttribute('data-phase')));});});document.getElementById('set-lastsave').textContent=DATA.settings.lastSyncAt?new Date(DATA.settings.lastSyncAt).toLocaleString():'Never';document.getElementById('set-created').textContent=DATA.settings.createdAt?new Date(DATA.settings.createdAt).toLocaleDateString():'—';document.getElementById('set-days').textContent=Object.keys(DATA.habits).length;document.getElementById('set-best').textContent=DATA.streaks.best+' days';document.querySelectorAll('.theme-opt[data-theme]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-theme')===DATA.settings.theme);b.addEventListener('click',function(){applyTheme(this.getAttribute('data-theme'));renderSettings();showToast('Theme: '+this.textContent.trim());});});
+function renderSettings(){var html='';PHASES.forEach(function(p){var ul=DATA.settings.phasesUnlocked.indexOf(p.id)>=0;html+='<div class="ss-r"><div><div style="font-size:0.875rem;font-weight:600">'+p.name+' · '+p.sub+'</div><div style="font-size:0.6875rem;color:var(--text-dim)">Unlocks week '+p.week+'</div></div>';if(p.id===0)html+='<div style="font-size:0.6875rem;color:var(--teal);font-weight:600">Always active</div>';else html+='<button class="btn-p'+(ul?' on':'')+'" data-phase="'+p.id+'">'+(ul?'✓ Active':'Unlock')+'</button>';html+='</div>';});document.getElementById('phase-mgmt').innerHTML=html;document.querySelectorAll('[data-phase]').forEach(function(b){b.addEventListener('click',function(){togglePhase(parseInt(this.getAttribute('data-phase')));});});document.getElementById('set-lastsave').textContent=DATA.settings.lastSyncAt?new Date(DATA.settings.lastSyncAt).toLocaleString():'Never';document.getElementById('set-created').textContent=DATA.settings.createdAt?new Date(DATA.settings.createdAt).toLocaleDateString():'—';document.getElementById('set-days').textContent=Object.keys(DATA.habits).length;document.getElementById('set-best').textContent=DATA.streaks.best+' days';document.querySelectorAll('.theme-opt[data-theme]').forEach(function(b){
+  var isActive=b.getAttribute('data-theme')===DATA.settings.theme;
+  b.style.outline=isActive?'2px solid var(--gold)':'none';
+  b.style.outlineOffset='2px';
+  b.addEventListener('click',function(){applyTheme(this.getAttribute('data-theme'));renderSettings();showToast('Theme: '+this.textContent.trim());});
+});
 document.querySelectorAll('.theme-opt[data-fsize]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-fsize')===DATA.settings.fontSize);b.addEventListener('click',function(){applyFontSize(this.getAttribute('data-fsize'));document.querySelectorAll('.theme-opt[data-fsize]').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-fsize')===DATA.settings.fontSize);});showToast('Font: '+this.textContent.trim());});});}
 function togglePhase(pid){var idx=DATA.settings.phasesUnlocked.indexOf(pid);if(idx>=0){DATA.settings.phasesUnlocked=DATA.settings.phasesUnlocked.filter(function(p){return p!==pid;});showToast('Phase '+pid+' locked');}else{DATA.settings.phasesUnlocked.push(pid);DATA.settings.phasesUnlocked.sort();showToast('Phase '+pid+' unlocked! 🌿');}saveState();renderHabits();updateUI();renderSettings();}
 
@@ -661,16 +841,365 @@ function exportCSV(){var csv='Date,Type,Name,XP,Completed At\n';Object.keys(DATA
 function exportJSON(){var b=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='bloom-backup-'+getToday()+'.json';a.click();URL.revokeObjectURL(u);showToast('Backup saved!');}
 
 renderHabits();renderWeek();renderHomeTasks();updateUI();
-function renderSymptoms(){var list=document.getElementById('symptoms-list');if(!list)return;var entries=[];Object.keys(DATA.habits).sort().reverse().forEach(function(d){var day=DATA.habits[d];if(day.flare&&day.flareNote&&day.flareNote.trim()){entries.push({date:d,note:day.flareNote.trim()});}});if(!entries.length){list.innerHTML='<div class="task-empty">No symptoms logged yet.<br><br>Toggle Flare Day on the home page to start tracking.</div>';return;}var html='';entries.forEach(function(e){var d=parseD(e.date);var dLabel=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});html+='<div class="ss a1" style="margin-bottom:10px"><div style="font-size:0.75rem;font-weight:700;color:var(--rose);margin-bottom:6px">🌡️ '+dLabel+'</div><div style="font-size:0.875rem;color:var(--text);line-height:1.5">'+e.note+'</div></div>';});list.innerHTML=html;}
+// REPORT PAGE
+function buildMonthOptions(){
+  var sel=document.getElementById('report-month-sel');
+  if(!sel||sel.options.length>0)return;
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var now=new Date();
+  for(var y=now.getFullYear();y>=now.getFullYear()-2;y--){
+    for(var m=11;m>=0;m--){
+      if(y===now.getFullYear()&&m>now.getMonth())continue;
+      var opt=document.createElement('option');
+      opt.value=y+'-'+String(m+1).padStart(2,'0');
+      opt.textContent=months[m]+' '+y;
+      sel.appendChild(opt);
+    }
+  }
+  sel.addEventListener('change',function(){renderReport();});
+}
+
+function renderReport(){
+  buildMonthOptions();
+  var sel=document.getElementById('report-month-sel');
+  var val=sel.value;
+  var parts=val.split('-');
+  var year=parseInt(parts[0]);var month=parseInt(parts[1])-1;
+  var daysInMonth=new Date(year,month+1,0).getDate();
+  var today=getToday();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  // Build day array for this month
+  var days=[];
+  for(var d=1;d<=daysInMonth;d++){
+    var ds=year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    days.push(ds);
+  }
+
+  // Stats
+  var totalXP=0;var bestXP=0;var bestDayLabel='—';
+  var activeHabits=DATA.habitDefs.filter(function(h){return !h.retired&&DATA.settings.phasesUnlocked.indexOf(h.phase)>=0;});
+  var habitTotals=[];var habitDone=[];
+  activeHabits.forEach(function(){habitTotals.push(0);habitDone.push(0);});
+  days.forEach(function(ds){
+    if(ds>today)return;
+    var dxp=getDayXP(ds);totalXP+=dxp;
+    if(dxp>bestXP){bestXP=dxp;bestDayLabel=parseD(ds).toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+    var dh=DATA.habits[ds]||{};
+    activeHabits.forEach(function(h,i){
+      habitTotals[i]++;
+      if(dh[h.id]&&dh[h.id].done)habitDone[i]++;
+    });
+  });
+  // Top/Least habit by completion rate (only habits with at least 1 opportunity)
+  var topRate=-1;var topName='—';var leastRate=2;var leastName='—';
+  activeHabits.forEach(function(h,i){
+    if(habitTotals[i]===0)return;
+    var rate=habitDone[i]/habitTotals[i];
+    if(rate>topRate){topRate=rate;topName=h.name;}
+    if(rate<leastRate){leastRate=rate;leastName=h.name;}
+  });
+  // Max possible XP per day for fixed-scale heatmap
+  var maxPossibleDayXP=activeHabits.reduce(function(s,h){return s+h.xp;},0)||80;
+  document.getElementById('rep-total-xp').textContent=totalXP;
+  document.getElementById('rep-best-day').textContent=bestDayLabel;
+  document.getElementById('rep-top-habit').textContent=topName;
+  document.getElementById('rep-least-habit').textContent=leastName;
+
+  // XP chart — show all days, skip labels only if needed on mobile
+  var xpPerDay=days.map(function(ds){return ds>today?null:getDayXP(ds);});
+  var isDark=document.documentElement.getAttribute('data-theme')!=='garden';
+  var chartLine=isDark?'#D4A84B':'#4E7D14';
+  var chartFill=isDark?'rgba(212,168,75,.18)':'rgba(78,125,20,.15)';
+  var chartGrid=isDark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)';
+  var chartTick=isDark?'#7A7670':'#6E7E5E';
+  var chartEl=document.getElementById('rep-chart');
+  if(window._repChart)window._repChart.destroy();
+  var allLabels=days.map(function(ds){return parseInt(ds.split('-')[2]);});
+  window._repChart=new Chart(chartEl,{
+    type:'line',
+    data:{
+      labels:allLabels,
+      datasets:[{label:'XP',data:xpPerDay,borderColor:chartLine,backgroundColor:chartFill,borderWidth:2,pointRadius:2,pointBackgroundColor:chartLine,fill:true,tension:.3,spanGaps:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return(c.parsed.y||0)+' XP';}}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:9},color:chartTick,autoSkip:true,maxTicksLimit:8,callback:function(val,i){var d=allLabels[i];return(d===1||d===8||d===15||d===22||d===29)?d:null;}}},
+        y:{grid:{color:chartGrid},ticks:{font:{size:9},color:chartTick,maxTicksLimit:4},min:0}
+      }
+    }
+  });
+
+  // Heatmap
+  var wrap=document.getElementById('rep-heatmap');
+  wrap.innerHTML='';
+
+  // Day of week header row
+  var firstDow=new Date(year,month,1).getDay();// 0=Sun
+  var dowLetters=['S','M','T','W','T','F','S'];
+  var dowRow=document.createElement('div');dowRow.className='rep-dow-row';
+  days.forEach(function(ds){
+    var d=parseInt(ds.split('-')[2]);
+    var dow=new Date(ds+'T00:00:00').getDay();
+    var el=document.createElement('div');el.className='rep-dow';
+    el.textContent=dowLetters[dow];
+    dowRow.appendChild(el);
+  });
+  wrap.appendChild(dowRow);
+
+  // Date number row
+  var dateRow=document.createElement('div');dateRow.className='rep-hm-row';
+  var dateLabel2=document.createElement('div');dateLabel2.className='rep-hm-name';dateLabel2.textContent='';
+  dateRow.appendChild(dateLabel2);
+  var dateCells=document.createElement('div');dateCells.className='rep-hm-cells';
+  days.forEach(function(ds){
+    var d=parseInt(ds.split('-')[2]);
+    var el=document.createElement('div');el.className='rep-dow';el.style.width='16px';
+    el.textContent=d; // show all dates
+    el.style.fontSize='8px';
+    dateCells.appendChild(el);
+  });
+  dateRow.appendChild(dateCells);
+  wrap.appendChild(dateRow);
+
+  // XP intensity row — fixed scale against max possible daily XP
+  var xpRow=document.createElement('div');xpRow.className='rep-hm-row';
+  var xpLabel=document.createElement('div');xpLabel.className='rep-hm-name';xpLabel.textContent='XP';xpLabel.style.color='var(--gold)';xpLabel.style.fontWeight='700';
+  xpRow.appendChild(xpLabel);
+  var xpCells=document.createElement('div');xpCells.className='rep-hm-cells';
+  days.forEach(function(ds,i){
+    var v=xpPerDay[i];
+    var el=document.createElement('div');el.className='rep-cell';
+    if(ds>today){el.classList.add('empty');}
+    else if(!v||v===0){el.classList.add('xp-0');}
+    else{
+      var pct=v/maxPossibleDayXP;
+      var tier=pct<0.4?'xp-1':pct<0.76?'xp-2':'xp-3';
+      el.classList.add(tier);
+    }
+    el.title=ds+': '+(v||0)+' XP';
+    (function(date){el.addEventListener('click',function(){dayViewDate=date;goNav('calendar');setTimeout(function(){showDayView();renderDayView(date);},50);});})(ds);
+    xpCells.appendChild(el);
+  });
+  xpRow.appendChild(xpCells);
+  wrap.appendChild(xpRow);
+
+  // Habit rows grouped by phase
+  var lastPhase=-1;
+  activeHabits.forEach(function(h){
+    if(DATA.settings.phasesUnlocked.indexOf(h.phase)<0)return;
+    // Phase label row
+    if(h.phase!==lastPhase){
+      lastPhase=h.phase;
+      var pName=PHASES.find(function(p){return p.id===h.phase;});
+      var pRow=document.createElement('div');pRow.className='rep-hm-row';
+      var pLabel=document.createElement('div');pLabel.className='rep-hm-name phase-label';
+      pLabel.textContent=pName?(pName.id===0?'Essentials':pName.name):'Phase '+h.phase;
+      pRow.appendChild(pLabel);
+      var pCells=document.createElement('div');pCells.className='rep-hm-cells';
+      days.forEach(function(){var sp=document.createElement('div');sp.style.width='16px';sp.style.height='16px';pCells.appendChild(sp);});
+      pRow.appendChild(pCells);
+      wrap.appendChild(pRow);
+    }
+    var hRow=document.createElement('div');hRow.className='rep-hm-row';
+    var hLabel=document.createElement('div');hLabel.className='rep-hm-name';hLabel.textContent=h.name;hLabel.title=h.name;
+    hRow.appendChild(hLabel);
+    var hCells=document.createElement('div');hCells.className='rep-hm-cells';
+    days.forEach(function(ds){
+      var dh=DATA.habits[ds]||{};
+      var el=document.createElement('div');el.className='rep-cell';
+      if(ds>today){el.classList.add('empty');}
+      else if(dh[h.id]&&dh[h.id].done){el.classList.add('done');}
+      else{el.classList.add('missed');}
+      el.title=h.name+' — '+ds+': '+(ds>today?'future':(dh[h.id]&&dh[h.id].done?'Done':'Missed'));
+      (function(date){el.addEventListener('click',function(){dayViewDate=date;goNav('calendar');setTimeout(function(){showDayView();renderDayView(date);},50);});})(ds);
+      hCells.appendChild(el);
+    });
+    hRow.appendChild(hCells);
+    wrap.appendChild(hRow);
+  });
+}
+
+function renderSymptoms(){
+  var list=document.getElementById('symptoms-list');if(!list)return;
+  var entries=[];
+  Object.keys(DATA.habits).sort().reverse().forEach(function(d){
+    var day=DATA.habits[d];
+    if(day&&(day.flare||day.flareNote)){entries.push({date:d,flare:!!day.flare,note:day.flareNote||''});}
+  });
+  if(!entries.length){list.innerHTML='<div class="task-empty">No flare days logged yet.<br>Toggle Flare Day on the home page or in calendar Day View.</div>';return;}
+
+  // Group by year
+  var byYear={};var yearOrder=[];
+  entries.forEach(function(e){
+    var y=e.date.split('-')[0];
+    if(!byYear[y]){byYear[y]=[];yearOrder.push(y);}
+    byYear[y].push(e);
+  });
+
+  var html='';
+  yearOrder.forEach(function(year){
+    html+='<div class="sym-year-div"><span class="sym-year-label">'+year+'</span></div>';
+    html+='<table class="sym-table"><thead><tr><th class="sym-th sym-date-col">Date</th><th class="sym-th">Notes</th><th class="sym-th sym-tog-col">Flare</th><th class="sym-th sym-del-col"></th></tr></thead><tbody>';
+    byYear[year].forEach(function(e){
+      var d=parseD(e.date);
+      var dateLabel=d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      var archived=!e.flare&&e.note;
+      var escapedNote=e.note.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      html+='<tr class="sym-row'+(archived?' sym-archived':'')+'" data-date="'+e.date+'">';
+      html+='<td class="sym-td sym-date-col">'+dateLabel+(e.flare?'<span class="sym-flare-dot">⚡</span>':'')+'</td>';
+      html+='<td class="sym-td sym-note-col"><div class="sym-note-view" data-date="'+e.date+'">'+(e.note||'<span style="color:var(--text-dim);font-style:italic">No note</span>')+'</div><textarea class="sym-note-edit flare-note" data-date="'+e.date+'" style="display:none">'+escapedNote+'</textarea></td>';
+      html+='<td class="sym-td sym-tog-col"><div class="tog sym-tog'+(e.flare?' on':'')+'" data-date="'+e.date+'"></div></td>';
+      html+='<td class="sym-td sym-del-col"><button class="sym-del-btn" data-date="'+e.date+'" title="Delete entry">×</button></td>';
+      html+='</tr>';
+    });
+    html+='</tbody></table>';
+  });
+  list.innerHTML=html;
+
+  // Wire inline edit — tap note cell to edit
+  list.querySelectorAll('.sym-note-view').forEach(function(view){
+    view.addEventListener('click',function(){
+      var d=this.getAttribute('data-date');
+      var ta=list.querySelector('.sym-note-edit[data-date="'+d+'"]');
+      this.style.display='none';ta.style.display='block';ta.focus();
+    });
+  });
+  // Save on blur
+  list.querySelectorAll('.sym-note-edit').forEach(function(ta){
+    var saveTimer;
+    ta.addEventListener('blur',function(){
+      var d=this.getAttribute('data-date');
+      if(!DATA.habits[d])DATA.habits[d]={};
+      DATA.habits[d].flareNote=this.value;
+      saveState();
+      renderSymptoms();
+    });
+    ta.addEventListener('input',function(){
+      var d=this.getAttribute('data-date');var val=this.value;
+      clearTimeout(saveTimer);saveTimer=setTimeout(function(){
+        if(!DATA.habits[d])DATA.habits[d]={};
+        DATA.habits[d].flareNote=val;saveState();
+      },800);
+    });
+  });
+  // Flare toggle — off = archived (greyed), on = active
+  list.querySelectorAll('.sym-tog').forEach(function(tog){
+    tog.addEventListener('click',function(e){
+      e.stopPropagation();
+      var d=this.getAttribute('data-date');
+      if(!DATA.habits[d])DATA.habits[d]={};
+      DATA.habits[d].flare=!DATA.habits[d].flare;
+      saveState();renderSymptoms();
+      if(d===getToday())renderFlareHome();
+    });
+  });
+  // Delete button — fully removes flare + note for that day
+  list.querySelectorAll('.sym-del-btn').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var d=this.getAttribute('data-date');
+      if(DATA.habits[d]){
+        delete DATA.habits[d].flare;
+        delete DATA.habits[d].flareNote;
+        // Clean up empty day entry
+        var keys=Object.keys(DATA.habits[d]).filter(function(k){return k!=='flare'&&k!=='flareNote';});
+        if(!keys.length)delete DATA.habits[d];
+      }
+      saveState();renderSymptoms();
+      if(d===getToday())renderFlareHome();
+      showToast('Entry deleted');
+    });
+  });
+}
 
 function renderHallOfFame(){var list=document.getElementById('hof-list');if(!list)return;var retired=getRetiredHabits();if(!retired.length){list.innerHTML='<div class="task-empty">Nothing graduated yet.<br><br>When a habit becomes second nature, retire it from the edit menu — it\'ll live here. 🎓</div>';return;}var html='';retired.forEach(function(h){var completions=0;var totalXP=0;Object.keys(DATA.xpLedger).forEach(function(d){DATA.xpLedger[d].entries.forEach(function(e){if(e.source==='habit'&&e.id===h.id){completions++;totalXP+=e.amount;}});});var pName=PHASES.find(function(p){return p.id===h.phase;});var pLabel=pName?pName.name:'Unknown phase';var retDate=h.retiredDate?parseD(h.retiredDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'';html+='<div class="ss a1" style="margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="font-size:1.375rem">🎓</div><div><div style="font-size:0.9375rem;font-weight:700;color:var(--gold)">'+h.name+'</div><div style="font-size:0.6875rem;color:var(--text-dim)">'+pLabel+(retDate?' · Retired '+retDate:'')+'</div></div></div><div style="display:flex;gap:20px"><div><div class="st-l">Completions</div><div style="font-size:1.0625rem;font-weight:700;color:var(--teal)">'+completions+'</div></div><div><div class="st-l">Total XP earned</div><div style="font-size:1.0625rem;font-weight:700;color:var(--gold)">'+totalXP+'</div></div></div></div>';});list.innerHTML=html;}
 
-// Wire Life hub cards and back buttons
-document.querySelectorAll('.life-card:not(.life-soon)').forEach(function(card){card.addEventListener('click',function(){goNav(this.getAttribute('data-nav'));});});
+function renderRewardsPage(){
+  var list=document.getElementById('rewards-manage-list');if(!list)return;
+  list.innerHTML='';
+  var balance=getXPBalance();
+  // XP balance card at top
+  var balCard=document.createElement('div');
+  balCard.className='ss';balCard.style.marginBottom='4px';
+  balCard.innerHTML='<div class="ss-r"><div class="st-l">XP Balance</div><div style="font-size:1.375rem;font-weight:700;color:var(--gold)">'+balance+' XP</div></div>';
+  list.appendChild(balCard);
+
+  getRewards().forEach(function(r){
+    // Get all non-refunded claims for this reward
+    var activeClaims=DATA.rewardClaims.filter(function(c){return c.rewardId===r.id&&!c.refunded;});
+    var wrap=document.createElement('div');wrap.className='ss';wrap.style.marginBottom='8px';
+
+    // Reward header row
+    var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:'+(activeClaims.length?'10px':'0');
+    hdr.innerHTML='<div style="font-size:1.5rem;flex-shrink:0">'+r.emoji+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:0.9375rem;font-weight:700;color:var(--text)">'+r.name+'</div>'
+      +'<div style="font-size:0.6875rem;color:var(--text-dim);margin-top:2px">'+(r.type==='xp'?r.cost+' XP · ':''+(r.note||''))+(r.supply==='onetime'?'One-time':'Repeatable')+'</div></div>'
+      +'<button class="btn-p" style="font-size:0.75rem;padding:6px 10px" data-edit-rid="'+r.id+'">Edit</button>';
+    wrap.appendChild(hdr);
+
+    // Claim history
+    if(activeClaims.length){
+      var claimHead=document.createElement('div');
+      claimHead.style.cssText='font-size:0.5625rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px';
+      claimHead.textContent='Claim history';
+      wrap.appendChild(claimHead);
+
+      activeClaims.slice().reverse().forEach(function(c){
+        var claimRow=document.createElement('div');
+        claimRow.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)';
+        var claimDate=c.claimedDate||c.claimedAt.slice(0,10);
+        var d=parseD(claimDate);
+        var dateLabel=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+        claimRow.innerHTML='<div style="font-size:0.8125rem;color:var(--text-mid)">'+dateLabel+'</div>'
+          +'<div style="display:flex;align-items:center;gap:10px">'
+          +'<div style="font-size:0.8125rem;color:var(--rose)">−'+c.amount+' XP</div>'
+          +'<button class="btn-p" style="font-size:0.6875rem;padding:4px 8px;color:var(--teal);border-color:var(--teal-dim)" data-refund-cid="'+c.id+'">↩ Refund</button>'
+          +'</div>';
+        wrap.appendChild(claimRow);
+      });
+    } else {
+      var noClaimsEl=document.createElement('div');
+      noClaimsEl.style.cssText='font-size:0.75rem;color:var(--text-dim);font-style:italic';
+      noClaimsEl.textContent='No claims yet';
+      wrap.appendChild(noClaimsEl);
+    }
+
+    list.appendChild(wrap);
+  });
+
+  // Wire edit buttons
+  list.querySelectorAll('[data-edit-rid]').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      editReward(this.getAttribute('data-edit-rid'));
+    });
+  });
+  // Wire refund buttons
+  list.querySelectorAll('[data-refund-cid]').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var cid=this.getAttribute('data-refund-cid');
+      var claim=DATA.rewardClaims.find(function(c){return c.id===cid;});
+      if(!claim)return;
+      var r=DATA.rewardDefs.find(function(x){return x.id===claim.rewardId;});
+      claim.refunded=true;
+      saveState();
+      updateUI();
+      renderRewardsPage();
+      showToast((r?r.emoji:'🎁')+' Refunded +'+claim.amount+' XP');
+    });
+  });
+}
+document.getElementById('rewards-manage-back').addEventListener('click',function(){goNav('life');});
+document.getElementById('rewards-manage-add').addEventListener('click',function(){addReward();});
 document.getElementById('symptoms-back').addEventListener('click',function(){goNav('life');});
 document.getElementById('hof-back').addEventListener('click',function(){goNav('life');});
+document.getElementById('report-back').addEventListener('click',function(){goNav('life');});
 document.getElementById('gdrive-connect-btn').addEventListener('click',connectGDrive);
 initGDrive();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </body>
 </html>
